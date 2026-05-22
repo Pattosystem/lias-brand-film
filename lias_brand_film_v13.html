@@ -182,118 +182,52 @@ html, body {
 /* ============================================================
    SCENE 02 · THE BUSINESS · ドキュメンタリー
    ============================================================ */
+/* ============================================================
+   SCENE 02 · WHO WE ARE · 4行積み上げ
+   ============================================================ */
 .scene-02 {
-  background: linear-gradient(180deg, #0a1828 0%, #0a0a14 100%);
+  background: #050508;
+  padding: 60px 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .scene-02::before {
-  content: '';
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse at 20% 20%, rgba(79,141,255,0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 80%, rgba(79,141,255,0.05) 0%, transparent 50%);
-  pointer-events: none;
-}
-.scene-02 .s2-hud {
+  content: 'CHAPTER 01 · WHO WE ARE';
   position: absolute;
-  top: 24px; left: 32px; right: 32px;
-  display: flex; justify-content: space-between;
-  font-family: 'SF Mono', monospace;
-  font-size: clamp(9px, 0.7vw, 11px);
-  color: rgba(255,255,255,0.4);
-  letter-spacing: 0.2em;
-  opacity: 0;
-  z-index: 5;
-}
-.scene-02.active .s2-hud { animation: fadeIn 0.5s ease-out 0.3s forwards; }
-.s2-rec {
-  color: #ef4444; display: flex; align-items: center; gap: 8px;
-}
-.s2-rec-dot {
-  width: 7px; height: 7px; background: #ef4444; border-radius: 50%;
-  animation: blink 1s infinite;
-}
-.scene-02 .s2-corner-tl, .scene-02 .s2-corner-tr,
-.scene-02 .s2-corner-bl, .scene-02 .s2-corner-br {
-  position: absolute;
-  width: 20px; height: 20px;
-  border-color: rgba(255,255,255,0.3);
-  border-style: solid;
-  opacity: 0;
-  z-index: 5;
-}
-.scene-02 .s2-corner-tl { top: 60px; left: 32px; border-width: 1px 0 0 1px; }
-.scene-02 .s2-corner-tr { top: 60px; right: 32px; border-width: 1px 1px 0 0; }
-.scene-02 .s2-corner-bl { bottom: 32px; left: 32px; border-width: 0 0 1px 1px; }
-.scene-02 .s2-corner-br { bottom: 32px; right: 32px; border-width: 0 1px 1px 0; }
-.scene-02.active [class*="s2-corner"] {
-  animation: fadeIn 0.8s ease-out 0.5s forwards;
-}
-.scene-02 .s2-content {
-  position: absolute; top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  max-width: 78%;
-  z-index: 3;
-}
-.scene-02 .s2-fact {
+  top: 24px; left: 32px;
   font-family: 'Inter', sans-serif;
-  font-size: clamp(10px, 0.85vw, 13px);
+  font-size: clamp(10px, 0.85vw, 12px);
   letter-spacing: 0.5em;
-  color: rgba(79,141,255,0.7);
-  margin-bottom: 24px;
+  color: rgba(79,141,255,0.75);
   opacity: 0;
+  z-index: 5;
 }
-.scene-02.active .s2-fact {
-  animation: fadeUp 0.8s ease-out 0.8s forwards;
+.scene-02.active::before {
+  animation: fadeIn 0.6s ease-out 0.3s forwards;
 }
-.scene-02 .s2-main {
-  font-size: clamp(22px, 2.4vw, 36px);
+.scene-02 .s2-line {
+  font-family: 'Hiragino Mincho ProN', serif;
+  font-size: clamp(24px, 2.6vw, 40px);
   font-weight: 200;
+  color: rgba(255,255,255,0.3);
+  line-height: 1.6;
+  letter-spacing: 0.04em;
+  opacity: 0;
+  margin: 6px 0;
+  transition: color 0.6s ease;
+}
+.scene-02 .s2-line.is-active {
   color: #fff;
-  line-height: 1.55;
-  letter-spacing: 0.02em;
-  opacity: 0;
 }
-.scene-02.active .s2-main {
-  animation: fadeUp 0.9s ease-out 1.6s forwards;
-}
-.scene-02 .s2-strike {
-  margin-top: 28px;
-  font-size: clamp(15px, 1.4vw, 20px);
-  color: rgba(255,255,255,0.4);
-  position: relative;
-  display: inline-block;
-  opacity: 0;
-}
-.scene-02.active .s2-strike {
-  animation: fadeIn 0.7s ease-out 3.0s forwards;
-}
-.scene-02 .s2-strike::after {
-  content: '';
-  position: absolute;
-  left: 0; right: 0;
-  top: 50%;
-  height: 1.5px;
-  background: rgba(239,68,68,0.7);
-  transform: scaleX(0);
-  transform-origin: left;
-}
-.scene-02.active .s2-strike::after {
-  animation: drawStrike 0.8s ease-out 3.7s forwards;
-}
-@keyframes drawStrike { to { transform: scaleX(1); } }
-.scene-02 .s2-conclusion {
-  margin-top: 26px;
-  font-size: clamp(18px, 1.9vw, 26px);
+.scene-02 .s2-line strong {
   color: #4f8dff;
   font-weight: 400;
-  letter-spacing: 0.03em;
-  opacity: 0;
 }
-.scene-02.active .s2-conclusion {
-  animation: fadeUp 0.9s ease-out 4.5s forwards;
-}
-.scene-02 .s2-happy { color: #4f8dff; font-weight: 500; }
+.scene-02.active .s2-line-1 { animation: fadeIn 0.8s ease-out 0.6s forwards; }
+.scene-02.active .s2-line-2 { animation: fadeIn 0.8s ease-out 3.7s forwards; }
+.scene-02.active .s2-line-3 { animation: fadeIn 0.8s ease-out 7.5s forwards; }
+.scene-02.active .s2-line-4 { animation: fadeIn 0.8s ease-out 11.9s forwards; }
 
 /* ============================================================
    SCENE 03 · THE STRATEGY · 巨大「商圏」
@@ -1765,23 +1699,10 @@ html, body {
          SCENE 02 · THE BUSINESS
          ============================================= -->
     <section class="scene scene-02" data-scene="02">
-      <div class="s2-hud">
-        <span class="s2-rec"><span class="s2-rec-dot"></span> REC · 01</span>
-        <span>CHAPTER 01 · WHAT WE DO</span>
-      </div>
-      <div class="s2-corner-tl"></div>
-      <div class="s2-corner-tr"></div>
-      <div class="s2-corner-bl"></div>
-      <div class="s2-corner-br"></div>
-      <div class="s2-content">
-        <div class="s2-fact">FACT 001</div>
-        <div class="s2-main">
-          海外から医薬品や医療機器を輸入し、<br>
-          日本のクリニックに届けています。
-        </div>
-        <div class="s2-strike">運ぶことが、ゴール。</div>
-        <div class="s2-conclusion">医療美容で、人を<span class="s2-happy">Happy</span>にする。</div>
-      </div>
+      <div class="s2-line s2-line-1">リアスは、医療美容の商品を扱う会社です。</div>
+      <div class="s2-line s2-line-2">そして、<strong>AI</strong>で、業務のしかたを変えています。</div>
+      <div class="s2-line s2-line-3"><strong>AI</strong>が、私たちを攻めに集中させる。</div>
+      <div class="s2-line s2-line-4">これは、その物語です。</div>
     </section>
 
     <!-- =============================================
@@ -2243,6 +2164,20 @@ function showScene(index) {
     void el.offsetWidth;
     el.style.animation = '';
   });
+
+  // SCENE 2: 行の強調を時間でスケジュール
+  if (index === 1) {
+    const lines = sceneEl.querySelectorAll('.s2-line');
+    lines.forEach(l => l.classList.remove('is-active'));
+    const times = [600, 3700, 7500, 11900];
+    times.forEach((t, i) => {
+      const id = setTimeout(() => {
+        lines.forEach(l => l.classList.remove('is-active'));
+        if (lines[i]) lines[i].classList.add('is-active');
+      }, t + 800);
+      timeouts.push(id);
+    });
+  }
 
   if (isPlaying && !isPaused) {
     playSceneAudio(index);
