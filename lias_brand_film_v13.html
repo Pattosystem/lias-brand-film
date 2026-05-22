@@ -350,6 +350,24 @@ html, body {
   background: #050508;
   overflow: hidden;
 }
+.scene-04 .s4-map {
+  position: absolute;
+  top: 0; right: -5%;
+  width: 65%;
+  height: 100%;
+  background: url('images/japan-map.png') no-repeat center center;
+  background-size: contain;
+  opacity: 0;
+  filter: brightness(1.2) contrast(0.9);
+  z-index: 1;
+}
+.scene-04.active .s4-map {
+  animation: s4MapIn 2s ease-out 0.6s forwards;
+}
+@keyframes s4MapIn {
+  from { opacity: 0; transform: scale(1.05); }
+  to { opacity: 0.7; transform: scale(1); }
+}
 .scene-04::before {
   content: 'CHAPTER 02 · AXIS 01';
   position: absolute;
@@ -366,7 +384,8 @@ html, body {
 }
 .scene-04 .s4-title-wrap {
   position: absolute;
-  top: 90px; left: 40px; right: 40px;
+  top: 90px; left: 60px;
+  max-width: 55%;
   z-index: 5;
 }
 .scene-04 .s4-pre {
@@ -383,11 +402,11 @@ html, body {
 }
 .scene-04 .s4-big {
   font-family: 'Hiragino Mincho ProN', serif;
-  font-size: clamp(48px, 6vw, 90px);
+  font-size: clamp(44px, 5.4vw, 80px);
   font-weight: 300;
   color: #fff;
   letter-spacing: 0.04em;
-  line-height: 1.1;
+  line-height: 1.15;
   opacity: 0;
 }
 .scene-04 .s4-big strong {
@@ -399,21 +418,21 @@ html, body {
 }
 .scene-04 .s4-circles {
   position: absolute;
-  bottom: 100px; left: 50%;
-  transform: translateX(-50%);
+  bottom: 100px; left: 60px;
   display: flex;
   gap: clamp(40px, 6vw, 80px);
   align-items: center;
   z-index: 5;
 }
 .scene-04 .s4-circle {
-  width: clamp(80px, 9vw, 130px);
-  height: clamp(80px, 9vw, 130px);
+  width: clamp(70px, 8vw, 110px);
+  height: clamp(70px, 8vw, 110px);
   border-radius: 50%;
   border: 2px solid #4f8dff;
-  background: rgba(79,141,255,0.08);
+  background: rgba(79,141,255,0.12);
   opacity: 0;
   position: relative;
+  backdrop-filter: blur(4px);
 }
 .scene-04 .s4-circle::before {
   content: '';
@@ -440,8 +459,7 @@ html, body {
 .scene-04.active .s4-circle-3 { animation: s4Pop 0.7s cubic-bezier(0.16,1,0.3,1) 6.2s forwards; }
 .scene-04 .s4-sub {
   position: absolute;
-  bottom: 50px; left: 0; right: 0;
-  text-align: center;
+  bottom: 50px; left: 60px;
   font-family: 'Inter', sans-serif;
   font-size: clamp(10px, 0.85vw, 12px);
   letter-spacing: 0.5em;
@@ -1757,6 +1775,7 @@ html, body {
          SCENE 04 · AXIS 01 宣言
          ============================================= -->
     <section class="scene scene-04" data-scene="04">
+      <div class="s4-map"></div>
       <div class="s4-title-wrap">
         <div class="s4-pre">一つ目のテーマは。</div>
         <div class="s4-big">商圏を、<strong>広げる。</strong></div>
