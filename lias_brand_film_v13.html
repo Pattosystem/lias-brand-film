@@ -452,10 +452,9 @@ html, body {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  margin-bottom: 30px;
+  margin-bottom: 6px;
   opacity: 0;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-  padding-bottom: 14px;
+  padding-bottom: 8px;
 }
 .scene-05.active .s5-header {
   animation: fadeIn 0.6s ease-out 0.3s forwards;
@@ -474,6 +473,23 @@ html, body {
   font-size: clamp(9px, 0.75vw, 11px);
   color: rgba(79,141,255,0.6);
   letter-spacing: 0.2em;
+}
+.scene-05 .s5-subtitle {
+  font-size: clamp(13px, 1.2vw, 17px);
+  color: rgba(255,255,255,0.85);
+  letter-spacing: 0.03em;
+  font-weight: 300;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  margin-bottom: 24px;
+  opacity: 0;
+}
+.scene-05 .s5-subtitle strong {
+  color: #4f8dff;
+  font-weight: 500;
+}
+.scene-05.active .s5-subtitle {
+  animation: fadeUp 0.7s ease-out 0.7s forwards;
 }
 .scene-05 .s5-chart-area {
   position: relative;
@@ -579,85 +595,64 @@ html, body {
 .scene-05.active .s5-caption { animation: fadeIn 0.8s ease-out 4.3s forwards; }
 
 /* ============================================================
-   SCENE 06 · PITTO · ブランドCM
+   SCENE 06 · PITTO · ブランドCM(実画像メイン)
    ============================================================ */
 .scene-06 {
-  background: linear-gradient(135deg, #1a2a4f 0%, #0a1530 100%);
-  padding: 50px 70px;
+  background: #050508;
   display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: 50px;
-  align-items: center;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 0;
+  overflow: hidden;
 }
 .scene-06::before {
   content: 'CHAPTER 03 · ROUTE A';
   position: absolute;
-  top: 30px; left: 40px;
+  top: 24px; left: 32px;
   font-family: 'Inter', sans-serif;
   font-size: clamp(10px, 0.85vw, 12px);
-  letter-spacing: 0.4em;
-  color: rgba(212,175,55,0.7);
+  letter-spacing: 0.5em;
+  color: rgba(212,175,55,0.85);
   opacity: 0;
+  z-index: 20;
 }
 .scene-06.active::before {
   animation: fadeIn 0.6s ease-out 0.3s forwards;
 }
-.scene-06 .s6-mock {
-  background: rgba(0,0,0,0.5);
-  border: 1px solid rgba(212,175,55,0.4);
-  border-radius: 8px;
-  padding: 30px;
+.scene-06 .s6-image-wrap {
+  position: relative;
+  overflow: hidden;
   opacity: 0;
 }
-.scene-06.active .s6-mock {
-  animation: fadeLeft 0.9s ease-out 0.6s forwards;
+.scene-06.active .s6-image-wrap {
+  animation: fadeIn 1.2s ease-out 0.4s forwards;
 }
-.scene-06 .s6-mock-logo {
-  font-family: 'Inter', sans-serif;
-  font-size: clamp(24px, 2.4vw, 36px);
-  font-weight: 700;
-  color: #d4af37;
-  letter-spacing: -0.01em;
-  margin-bottom: 4px;
+.scene-06 .s6-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transform: scale(1);
+  transition: transform 10s ease-out;
 }
-.scene-06 .s6-mock-logo::before { content: '⌂  '; }
-.scene-06 .s6-mock-url {
-  font-family: 'SF Mono', monospace;
-  font-size: clamp(10px, 0.85vw, 12px);
-  color: rgba(212,175,55,0.5);
-  margin-bottom: 26px;
+.scene-06.active .s6-image {
+  transform: scale(1.05);
 }
-.scene-06 .s6-mock-banner {
-  background: linear-gradient(135deg, rgba(212,175,55,0.18) 0%, rgba(255,255,255,0.04) 100%);
-  border: 1px solid rgba(212,175,55,0.3);
-  border-radius: 4px;
-  padding: 24px;
-  text-align: center;
+.scene-06 .s6-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 70%, rgba(5,5,8,0.95) 100%);
+  pointer-events: none;
 }
-.scene-06 .s6-mock-date {
-  font-family: 'Inter', sans-serif;
-  font-size: clamp(20px, 2vw, 30px);
-  font-weight: 700;
-  color: #d4af37;
-  letter-spacing: 0.02em;
-  margin-bottom: 8px;
-}
-.scene-06 .s6-mock-academy {
-  font-size: clamp(14px, 1.2vw, 18px);
-  color: #fff;
-  line-height: 1.4;
-}
-.scene-06 .s6-mock-tag {
-  font-size: clamp(9px, 0.75vw, 11px);
-  letter-spacing: 0.4em;
-  color: rgba(212,175,55,0.6);
-  margin-top: 12px;
-}
-.scene-06 .s6-text {
+.scene-06 .s6-text-panel {
+  background: linear-gradient(135deg, #1a2a4f 0%, #0a1530 100%);
+  padding: 50px 50px 50px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   opacity: 0;
 }
-.scene-06.active .s6-text {
-  animation: fadeRight 0.9s ease-out 1.4s forwards;
+.scene-06.active .s6-text-panel {
+  animation: fadeLeft 1s ease-out 1.0s forwards;
 }
 .scene-06 .s6-route {
   font-family: 'Inter', sans-serif;
@@ -668,43 +663,57 @@ html, body {
 }
 .scene-06 .s6-name {
   font-family: 'Inter', sans-serif;
-  font-size: clamp(56px, 6.5vw, 92px);
+  font-size: clamp(50px, 6vw, 84px);
   font-weight: 700;
   color: #d4af37;
   letter-spacing: -0.01em;
   line-height: 0.95;
-  margin-bottom: 24px;
+  margin-bottom: 22px;
 }
 .scene-06 .s6-tagline {
   font-size: clamp(15px, 1.4vw, 20px);
   color: #fff;
   line-height: 1.6;
   font-weight: 300;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 .scene-06 .s6-tagline strong {
   color: #d4af37;
   font-weight: 500;
 }
-.scene-06 .s6-points {
-  margin-top: 24px;
-  padding-top: 18px;
+.scene-06 .s6-desc {
+  font-size: clamp(12px, 1vw, 14px);
+  color: rgba(255,255,255,0.65);
+  line-height: 1.7;
+  margin-top: 14px;
+  padding-top: 14px;
   border-top: 1px solid rgba(212,175,55,0.3);
+}
+.scene-06 .s6-points {
+  margin-top: 22px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  gap: 14px;
 }
 .scene-06 .s6-point {
-  font-size: clamp(11px, 0.9vw, 13px);
-  color: rgba(255,255,255,0.7);
+  font-size: clamp(11px, 0.95vw, 13px);
+  color: rgba(255,255,255,0.75);
+  line-height: 1.5;
 }
 .scene-06 .s6-point-num {
   font-family: 'Inter', sans-serif;
   color: #d4af37;
-  font-size: clamp(9px, 0.75vw, 11px);
+  font-size: clamp(9px, 0.78vw, 11px);
   letter-spacing: 0.3em;
   display: block;
   margin-bottom: 4px;
+}
+.scene-06 .s6-url {
+  margin-top: 22px;
+  font-family: 'SF Mono', monospace;
+  font-size: clamp(10px, 0.85vw, 12px);
+  color: rgba(212,175,55,0.65);
+  letter-spacing: 0.05em;
 }
 
 /* ============================================================
@@ -1675,6 +1684,7 @@ html, body {
         <div class="s5-title">JAPAN MEDICAL BEAUTY MARKET · <strong>SHARE BY ROUTE</strong></div>
         <div class="s5-meta">UPDATED 2026</div>
       </div>
+      <div class="s5-subtitle"><strong>3つのWebサイト</strong>で、市場の顧客を取りに行く。</div>
       <div class="s5-chart-area">
         <div class="s5-grid">
           <div class="s5-grid-line" style="top: 20%;"></div>
@@ -1722,19 +1732,17 @@ html, body {
          SCENE 06 · PITTO ①
          ============================================= -->
     <section class="scene scene-06" data-scene="06">
-      <div class="s6-mock">
-        <div class="s6-mock-logo">PITTO</div>
-        <div class="s6-mock-url">pitto.i15.bcart.jp</div>
-        <div class="s6-mock-banner">
-          <div class="s6-mock-date">2026 / 06.28</div>
-          <div class="s6-mock-academy">VANDS &amp; LIAS<br>Medical Academy</div>
-          <div class="s6-mock-tag">FIRST SESSION 2026</div>
-        </div>
+      <div class="s6-image-wrap">
+        <img class="s6-image" src="images/pitto.png" alt="PITTO">
+        <div class="s6-image-overlay"></div>
       </div>
-      <div class="s6-text">
+      <div class="s6-text-panel">
         <div class="s6-route">ROUTE / A</div>
         <div class="s6-name">PITTO</div>
-        <div class="s6-tagline">紹介制のクローズドサイト。<br><strong>信頼の連鎖</strong>で、広げる。</div>
+        <div class="s6-tagline">紹介制のクローズドサイト。<br><strong>信頼の連鎖</strong>で広げる。</div>
+        <div class="s6-desc">
+          医療機関専用のオンライン受発注サイト。価格と紹介料が、信頼の連鎖を生み出す。
+        </div>
         <div class="s6-points">
           <div class="s6-point">
             <span class="s6-point-num">01 · PRICE</span>
@@ -1742,9 +1750,10 @@ html, body {
           </div>
           <div class="s6-point">
             <span class="s6-point-num">02 · REWARD</span>
-            紹介してくれた人にも、対価を返す。
+            紹介者にも、対価を返す。
           </div>
         </div>
+        <div class="s6-url">pitto.i15.bcart.jp</div>
       </div>
     </section>
 
