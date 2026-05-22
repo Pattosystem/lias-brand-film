@@ -746,6 +746,47 @@ html, body {
   letter-spacing: 0.05em;
 }
 
+/* 蛍の光のように、ふわっと現れて消える特徴の文字 */
+.scene-06 .s6-bubbles {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 38%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+}
+.scene-06 .s6-bubble {
+  position: absolute;
+  padding: 0;
+  border: none;
+  background: transparent;
+  font-family: 'Hiragino Sans', sans-serif;
+  font-size: clamp(24px, 2.6vw, 38px);
+  font-weight: 200;
+  color: rgba(255,255,255,0.18);
+  letter-spacing: 0.15em;
+  white-space: nowrap;
+  opacity: 0;
+}
+
+/* それぞれ違う場所 */
+.scene-06 .s6-bubble-1 { top: 10%; right: 8%; }
+.scene-06 .s6-bubble-2 { top: 32%; left: 4%; }
+.scene-06 .s6-bubble-3 { bottom: 14%; right: 6%; }
+
+/* 蛍のような、ゆっくりとしたフェード */
+@keyframes s6Firefly {
+  0%   { opacity: 0; }
+  25%  { opacity: 1; }
+  75%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.scene-06.active .s6-bubble-1 { animation: s6Firefly 8.0s ease-in-out 2.5s forwards; }
+.scene-06.active .s6-bubble-2 { animation: s6Firefly 8.0s ease-in-out 6.0s forwards; }
+.scene-06.active .s6-bubble-3 { animation: s6Firefly 8.0s ease-in-out 9.5s forwards; }
+
 /* ============================================================
    SCENE 07 · PITTO 起源 · 回想(画像+手紙)
    ============================================================ */
@@ -943,39 +984,54 @@ html, body {
   color: rgba(200,165,100,0.7);
   margin-bottom: 36px;
 }
-.scene-08 .s8-stats {
-  border-top: 1px solid rgba(200,165,100,0.2);
-}
-.scene-08 .s8-stat {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  padding: 14px 0;
-  border-bottom: 1px solid rgba(200,165,100,0.15);
+.scene-08 .s8-clients-title {
+  font-family: 'SF Mono', monospace;
+  font-size: clamp(10px, 0.85vw, 12px);
+  letter-spacing: 0.3em;
+  color: rgba(200,165,100,0.7);
+  margin-bottom: 18px;
   opacity: 0;
 }
-.scene-08 .s8-stat-label {
-  font-size: clamp(12px, 1vw, 15px);
-  color: rgba(255,255,255,0.75);
-  letter-spacing: 0.05em;
+.scene-08.active .s8-clients-title {
+  animation: fadeIn 0.6s ease-out 1.6s forwards;
 }
-.scene-08 .s8-stat-num {
-  font-family: 'Inter', sans-serif;
-  font-size: clamp(24px, 2.4vw, 36px);
-  font-weight: 300;
-  color: #c8a564;
-  letter-spacing: -0.02em;
+.scene-08 .s8-clients {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
-.scene-08 .s8-stat-num small {
-  font-size: clamp(11px, 1vw, 14px);
-  color: rgba(200,165,100,0.6);
-  margin-left: 4px;
+.scene-08 .s8-client {
+  padding: 14px 20px;
+  border-left: 3px solid #c8a564;
+  background: rgba(200,165,100,0.08);
+  opacity: 0;
+  transform: translateX(-20px);
+}
+@keyframes s8ClientIn {
+  to { opacity: 1; transform: translateX(0); }
+}
+.scene-08.active .s8-client-1 { animation: s8ClientIn 0.7s cubic-bezier(0.16,1,0.3,1) 2.2s forwards; }
+.scene-08.active .s8-client-2 { animation: s8ClientIn 0.7s cubic-bezier(0.16,1,0.3,1) 4.5s forwards; }
+.scene-08.active .s8-client-3 { animation: s8ClientIn 0.7s cubic-bezier(0.16,1,0.3,1) 6.8s forwards; }
+.scene-08 .s8-client-label {
+  font-family: 'SF Mono', monospace;
+  font-size: clamp(9px, 0.75vw, 11px);
+  letter-spacing: 0.3em;
+  color: rgba(200,165,100,0.7);
+  margin-bottom: 4px;
+}
+.scene-08 .s8-client-name {
+  font-size: clamp(15px, 1.3vw, 19px);
   font-weight: 400;
+  color: #fff;
+  letter-spacing: 0.03em;
 }
-.scene-08.active .s8-stat-1 { animation: fadeIn 0.6s ease-out 1.8s forwards; }
-.scene-08.active .s8-stat-2 { animation: fadeIn 0.6s ease-out 2.2s forwards; }
-.scene-08.active .s8-stat-3 { animation: fadeIn 0.6s ease-out 2.6s forwards; }
-.scene-08.active .s8-stat-4 { animation: fadeIn 0.6s ease-out 3.0s forwards; }
+.scene-08 .s8-client-name .s8-recent {
+  font-size: clamp(10px, 0.85vw, 12px);
+  color: #c8a564;
+  margin-left: 10px;
+  font-weight: 300;
+}
 .scene-08 .s8-right {
   opacity: 0;
   align-self: center;
@@ -985,7 +1041,7 @@ html, body {
   z-index: 5;
 }
 .scene-08.active .s8-right {
-  animation: fadeRight 0.9s ease-out 3.6s forwards;
+  animation: fadeRight 0.9s ease-out 1.0s forwards;
 }
 .scene-08 .s8-route {
   font-family: 'Inter', sans-serif;
@@ -999,7 +1055,7 @@ html, body {
   font-weight: 200;
   color: #fff;
   line-height: 1.3;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
   letter-spacing: 0.02em;
   text-shadow: 0 2px 10px rgba(0,0,0,0.6);
 }
@@ -1007,20 +1063,63 @@ html, body {
   color: #c8a564;
   font-weight: 500;
 }
-.scene-08 .s8-body {
-  font-size: clamp(12px, 1.05vw, 15px);
-  color: rgba(255,255,255,0.75);
-  line-height: 1.85;
-  letter-spacing: 0.02em;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
-}
-.scene-08 .s8-url {
-  margin-top: 20px;
+.scene-08 .s8-ops-title {
   font-family: 'SF Mono', monospace;
   font-size: clamp(10px, 0.85vw, 12px);
-  color: rgba(200,165,100,0.6);
-  letter-spacing: 0.05em;
+  letter-spacing: 0.3em;
+  color: rgba(200,165,100,0.7);
+  margin-top: 14px;
+  margin-bottom: 14px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(200,165,100,0.25);
+  opacity: 0;
 }
+.scene-08.active .s8-ops-title {
+  animation: fadeIn 0.6s ease-out 9.0s forwards;
+}
+.scene-08 .s8-ops-list {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.scene-08 .s8-ops-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 3px 0;
+  opacity: 0;
+}
+.scene-08 .s8-ops-tag-ai,
+.scene-08 .s8-ops-tag-human {
+  font-family: 'SF Mono', monospace;
+  padding: 3px 10px;
+  border-radius: 3px;
+  font-size: clamp(9px, 0.78vw, 11px);
+  font-weight: 700;
+  text-align: center;
+  min-width: 64px;
+  flex-shrink: 0;
+}
+.scene-08 .s8-ops-tag-ai {
+  color: #fbbf24;
+  border: 1px solid rgba(251,191,36,0.5);
+  background: rgba(251,191,36,0.08);
+}
+.scene-08 .s8-ops-tag-human {
+  color: #4f8dff;
+  border: 1px solid rgba(79,141,255,0.5);
+  background: rgba(79,141,255,0.08);
+}
+.scene-08 .s8-ops-text {
+  font-size: clamp(11px, 0.95vw, 13px);
+  color: rgba(255,255,255,0.85);
+  letter-spacing: 0.02em;
+}
+.scene-08.active .s8-ops-row-1 { animation: fadeLeft 0.5s ease-out 9.4s forwards; }
+.scene-08.active .s8-ops-row-2 { animation: fadeLeft 0.5s ease-out 9.8s forwards; }
+.scene-08.active .s8-ops-row-3 { animation: fadeLeft 0.5s ease-out 10.2s forwards; }
+.scene-08.active .s8-ops-row-4 { animation: fadeLeft 0.5s ease-out 10.6s forwards; }
+.scene-08.active .s8-ops-row-5 { animation: fadeLeft 0.5s ease-out 11.0s forwards; }
 
 /* ============================================================
    SCENE 09 · JJMEDITEC · テック・グローバル(右に画像)
@@ -1850,6 +1949,11 @@ html, body {
         <img class="s6-image" src="images/pitto.png" alt="PITTO">
         <div class="s6-image-overlay"></div>
       </div>
+      <div class="s6-bubbles">
+        <div class="s6-bubble s6-bubble-1">豊富な商品数</div>
+        <div class="s6-bubble s6-bubble-2">安さを重視</div>
+        <div class="s6-bubble s6-bubble-3">紹介料発生</div>
+      </div>
       <div class="s6-text-panel">
         <div class="s6-route">ROUTE / A</div>
         <div class="s6-name">PITTO</div>
@@ -1900,31 +2004,47 @@ html, body {
       <div class="s8-left">
         <div class="s8-logo">Medixor</div>
         <div class="s8-tag">MEDICAL BEAUTY PROVIDER</div>
-        <div class="s8-stats">
-          <div class="s8-stat s8-stat-1">
-            <span class="s8-stat-label">スキンブースター</span>
-            <span class="s8-stat-num">42<small>種類</small></span>
+        <div class="s8-clients-title">// NEW CLIENTS · 新しくつながった先生たち</div>
+        <div class="s8-clients">
+          <div class="s8-client s8-client-1">
+            <div class="s8-client-label">CLIENT / 01</div>
+            <div class="s8-client-name">自由診療の専門家</div>
           </div>
-          <div class="s8-stat s8-stat-2">
-            <span class="s8-stat-label">ヒアルロン酸</span>
-            <span class="s8-stat-num">24<small>種類</small></span>
+          <div class="s8-client s8-client-2">
+            <div class="s8-client-label">CLIENT / 02</div>
+            <div class="s8-client-name">保険診療 × 自由診療を取り入れたい先生</div>
           </div>
-          <div class="s8-stat s8-stat-3">
-            <span class="s8-stat-label">ボツリヌス</span>
-            <span class="s8-stat-num">12<small>種類</small></span>
-          </div>
-          <div class="s8-stat s8-stat-4">
-            <span class="s8-stat-label">登録スピード(対 PITTO比)</span>
-            <span class="s8-stat-num">2x<small>+</small></span>
+          <div class="s8-client s8-client-3">
+            <div class="s8-client-label">CLIENT / 03</div>
+            <div class="s8-client-name">歯科の先生<span class="s8-recent">— 最近、増えている</span></div>
           </div>
         </div>
       </div>
       <div class="s8-right">
         <div class="s8-route">ROUTE / B</div>
         <div class="s8-headline">検索の<strong>入口</strong>に立つ。</div>
-        <div class="s8-body">
-          公開サイトで、これまで出会えなかった先生方とつながり始めた。<br>
-          SEOもコンテンツも、AIに任せる形で運用しています。
+        <div class="s8-ops-title">// OPERATIONS · AIに任せる作業</div>
+        <div class="s8-ops-list">
+          <div class="s8-ops-row s8-ops-row-1">
+            <span class="s8-ops-tag-ai">AI</span>
+            <span class="s8-ops-text">SEO対策の中身を実装</span>
+          </div>
+          <div class="s8-ops-row s8-ops-row-2">
+            <span class="s8-ops-tag-ai">AI</span>
+            <span class="s8-ops-text">ブログコンテンツの生成</span>
+          </div>
+          <div class="s8-ops-row s8-ops-row-3">
+            <span class="s8-ops-tag-ai">AI</span>
+            <span class="s8-ops-text">検索キーワードの分析</span>
+          </div>
+          <div class="s8-ops-row s8-ops-row-4">
+            <span class="s8-ops-tag-human">HUMAN</span>
+            <span class="s8-ops-text">どうヒットさせるかの方針</span>
+          </div>
+          <div class="s8-ops-row s8-ops-row-5">
+            <span class="s8-ops-tag-human">HUMAN</span>
+            <span class="s8-ops-text">担当者の判断と最終チェック</span>
+          </div>
         </div>
       </div>
     </section>
