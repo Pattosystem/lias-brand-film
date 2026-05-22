@@ -1488,13 +1488,14 @@ html, body {
 .scene-13.active .s13-node3 { animation: pop 0.7s cubic-bezier(0.16,1,0.3,1) 2.4s forwards; }
 .scene-13 .s13-arrow {
   fill: none;
-  stroke-width: 1.5;
-  stroke-dasharray: 400;
-  stroke-dashoffset: 400;
+  stroke-width: 2;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  stroke-linecap: round;
 }
-.scene-13.active .s13-arrow1 { animation: drawLine 1s ease-out 2.4s forwards; }
-.scene-13.active .s13-arrow2 { animation: drawLine 1s ease-out 3.1s forwards; }
-.scene-13.active .s13-arrow3 { animation: drawLine 1s ease-out 3.8s forwards; }
+.scene-13.active .s13-arrow1 { animation: drawLine 1.2s ease-out 2.4s forwards; }
+.scene-13.active .s13-arrow2 { animation: drawLine 1.2s ease-out 3.6s forwards; }
+.scene-13.active .s13-arrow3 { animation: drawLine 1.2s ease-out 4.8s forwards; }
 .scene-13 .s13-title {
   position: absolute;
   top: 32px; left: 0; right: 0;
@@ -2036,11 +2037,11 @@ html, body {
           <text x="330" y="518" text-anchor="middle" font-size="18" fill="#fff" font-weight="300">回す力を強くする</text>
         </g>
         <!-- 矢印1: 商圏 → 価値 -->
-        <path class="s13-arrow s13-arrow1" d="M 800 200 Q 950 320 970 470" stroke="#4f8dff" marker-end="url(#arr13)"/>
+        <path class="s13-arrow s13-arrow1" pathLength="100" d="M 800 200 Q 950 320 970 470" stroke="#4f8dff" marker-end="url(#arr13)"/>
         <!-- 矢印2: 価値 → 回す力 -->
-        <path class="s13-arrow s13-arrow2" d="M 970 510 Q 700 600 430 510" stroke="#4f8dff" marker-end="url(#arr13)"/>
+        <path class="s13-arrow s13-arrow2" pathLength="100" d="M 970 510 Q 700 600 430 510" stroke="#4f8dff" marker-end="url(#arr13)"/>
         <!-- 矢印3: 回す力 → 商圏 -->
-        <path class="s13-arrow s13-arrow3" d="M 430 470 Q 450 320 600 200" stroke="#4f8dff" marker-end="url(#arr13)"/>
+        <path class="s13-arrow s13-arrow3" pathLength="100" d="M 430 470 Q 450 320 600 200" stroke="#4f8dff" marker-end="url(#arr13)"/>
       </svg>
       <div class="s13-bottom">
         <div class="s13-bottom-text">伸びた事業が、また<strong>回す力</strong>を強くする。</div>
