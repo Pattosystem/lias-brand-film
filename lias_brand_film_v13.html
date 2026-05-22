@@ -834,10 +834,11 @@ html, body {
 }
 
 /* ============================================================
-   SCENE 08 · MEDIXOR · データ分析
+   SCENE 08 · MEDIXOR · 画像背景+データ
    ============================================================ */
 .scene-08 {
   background: #0a0d18;
+  overflow: hidden;
   padding: 50px 70px;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -847,19 +848,55 @@ html, body {
 .scene-08::before {
   content: 'CHAPTER 03 · ROUTE B';
   position: absolute;
-  top: 30px; left: 40px;
+  top: 24px; left: 32px;
   font-family: 'Inter', sans-serif;
   font-size: clamp(10px, 0.85vw, 12px);
-  letter-spacing: 0.4em;
-  color: rgba(200,165,100,0.7);
+  letter-spacing: 0.5em;
+  color: rgba(200,165,100,0.85);
   opacity: 0;
+  z-index: 10;
 }
 .scene-08.active::before {
   animation: fadeIn 0.6s ease-out 0.3s forwards;
 }
-.scene-08 .s8-left { opacity: 0; }
+.scene-08 .s8-image-wrap {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  opacity: 0;
+  z-index: 0;
+}
+.scene-08.active .s8-image-wrap {
+  animation: fadeIn 1.8s ease-out 0.3s forwards;
+}
+.scene-08 .s8-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.18;
+  filter: saturate(0.7) brightness(1.05);
+  transform: scale(1.05);
+  transition: transform 14s ease-out;
+}
+.scene-08.active .s8-image {
+  transform: scale(1.12);
+}
+.scene-08 .s8-image-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(135deg, rgba(10,13,24,0.6) 0%, rgba(10,13,24,0.9) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+.scene-08 .s8-left {
+  opacity: 0;
+  position: relative;
+  z-index: 5;
+}
 .scene-08.active .s8-left {
-  animation: fadeLeft 0.9s ease-out 0.6s forwards;
+  animation: fadeLeft 0.9s ease-out 1.0s forwards;
 }
 .scene-08 .s8-logo {
   font-family: 'Inter', sans-serif;
@@ -873,23 +910,23 @@ html, body {
 .scene-08 .s8-tag {
   font-size: clamp(9px, 0.8vw, 12px);
   letter-spacing: 0.5em;
-  color: rgba(200,165,100,0.6);
+  color: rgba(200,165,100,0.7);
   margin-bottom: 36px;
 }
 .scene-08 .s8-stats {
-  border-top: 1px solid rgba(255,255,255,0.1);
+  border-top: 1px solid rgba(200,165,100,0.2);
 }
 .scene-08 .s8-stat {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   padding: 14px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid rgba(200,165,100,0.15);
   opacity: 0;
 }
 .scene-08 .s8-stat-label {
   font-size: clamp(12px, 1vw, 15px);
-  color: rgba(255,255,255,0.65);
+  color: rgba(255,255,255,0.75);
   letter-spacing: 0.05em;
 }
 .scene-08 .s8-stat-num {
@@ -905,33 +942,36 @@ html, body {
   margin-left: 4px;
   font-weight: 400;
 }
-.scene-08.active .s8-stat:nth-child(1) { animation: fadeIn 0.6s ease-out 1.4s forwards; }
-.scene-08.active .s8-stat:nth-child(2) { animation: fadeIn 0.6s ease-out 1.8s forwards; }
-.scene-08.active .s8-stat:nth-child(3) { animation: fadeIn 0.6s ease-out 2.2s forwards; }
-.scene-08.active .s8-stat:nth-child(4) { animation: fadeIn 0.6s ease-out 2.6s forwards; }
+.scene-08.active .s8-stat-1 { animation: fadeIn 0.6s ease-out 1.8s forwards; }
+.scene-08.active .s8-stat-2 { animation: fadeIn 0.6s ease-out 2.2s forwards; }
+.scene-08.active .s8-stat-3 { animation: fadeIn 0.6s ease-out 2.6s forwards; }
+.scene-08.active .s8-stat-4 { animation: fadeIn 0.6s ease-out 3.0s forwards; }
 .scene-08 .s8-right {
   opacity: 0;
   align-self: center;
   padding-left: 30px;
   border-left: 2px solid rgba(200,165,100,0.4);
+  position: relative;
+  z-index: 5;
 }
 .scene-08.active .s8-right {
-  animation: fadeRight 0.9s ease-out 3.2s forwards;
+  animation: fadeRight 0.9s ease-out 3.6s forwards;
 }
 .scene-08 .s8-route {
   font-family: 'Inter', sans-serif;
   font-size: clamp(10px, 0.85vw, 12px);
   letter-spacing: 0.5em;
-  color: rgba(200,165,100,0.7);
+  color: rgba(200,165,100,0.8);
   margin-bottom: 14px;
 }
 .scene-08 .s8-headline {
-  font-size: clamp(26px, 2.6vw, 38px);
+  font-size: clamp(26px, 2.6vw, 40px);
   font-weight: 200;
   color: #fff;
   line-height: 1.3;
-  margin-bottom: 18px;
+  margin-bottom: 20px;
   letter-spacing: 0.02em;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.6);
 }
 .scene-08 .s8-headline strong {
   color: #c8a564;
@@ -939,9 +979,17 @@ html, body {
 }
 .scene-08 .s8-body {
   font-size: clamp(12px, 1.05vw, 15px);
-  color: rgba(255,255,255,0.65);
-  line-height: 1.8;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.85;
   letter-spacing: 0.02em;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+}
+.scene-08 .s8-url {
+  margin-top: 20px;
+  font-family: 'SF Mono', monospace;
+  font-size: clamp(10px, 0.85vw, 12px);
+  color: rgba(200,165,100,0.6);
+  letter-spacing: 0.05em;
 }
 
 /* ============================================================
@@ -1816,23 +1864,27 @@ html, body {
          SCENE 08 · MEDIXOR
          ============================================= -->
     <section class="scene scene-08" data-scene="08">
+      <div class="s8-image-wrap">
+        <img class="s8-image" src="images/medixor.jpg" alt="Medixor">
+      </div>
+      <div class="s8-image-overlay"></div>
       <div class="s8-left">
         <div class="s8-logo">Medixor</div>
         <div class="s8-tag">MEDICAL BEAUTY PROVIDER</div>
         <div class="s8-stats">
-          <div class="s8-stat">
+          <div class="s8-stat s8-stat-1">
             <span class="s8-stat-label">スキンブースター</span>
             <span class="s8-stat-num">42<small>種類</small></span>
           </div>
-          <div class="s8-stat">
+          <div class="s8-stat s8-stat-2">
             <span class="s8-stat-label">ヒアルロン酸</span>
             <span class="s8-stat-num">24<small>種類</small></span>
           </div>
-          <div class="s8-stat">
+          <div class="s8-stat s8-stat-3">
             <span class="s8-stat-label">ボツリヌス</span>
             <span class="s8-stat-num">12<small>種類</small></span>
           </div>
-          <div class="s8-stat">
+          <div class="s8-stat s8-stat-4">
             <span class="s8-stat-label">登録スピード(対 PITTO比)</span>
             <span class="s8-stat-num">2x<small>+</small></span>
           </div>
