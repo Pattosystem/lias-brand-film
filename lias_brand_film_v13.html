@@ -360,28 +360,29 @@ html, body {
 }
 
 /* ============================================================
-   SCENE 04 · AXIS 01 宣言 · 広告コピー
+   SCENE 04 · AXIS 01 宣言 · 矢印で外に向かう
    ============================================================ */
 .scene-04 {
   background: #0a0a0f;
   overflow: hidden;
 }
-.scene-04 .s4-bg-text {
-  position: absolute; top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
+.scene-04::before {
+  content: 'CHAPTER 03 · AXIS 01';
+  position: absolute;
+  top: 24px; left: 32px;
   font-family: 'Inter', sans-serif;
-  font-size: clamp(280px, 32vw, 480px);
-  font-weight: 900;
-  color: rgba(79,141,255,0.05);
-  letter-spacing: -0.05em;
-  white-space: nowrap;
+  font-size: clamp(10px, 0.85vw, 12px);
+  letter-spacing: 0.5em;
+  color: rgba(79,141,255,0.75);
   opacity: 0;
+  z-index: 5;
 }
-.scene-04.active .s4-bg-text {
-  animation: fadeIn 1.2s ease-out 0.5s forwards;
+.scene-04.active::before {
+  animation: fadeIn 0.6s ease-out 0.3s forwards;
 }
-.scene-04 .s4-center {
-  position: absolute; top: 50%; left: 50%;
+.scene-04 .s4-content {
+  position: absolute;
+  top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
   z-index: 5;
@@ -391,37 +392,53 @@ html, body {
   font-size: clamp(11px, 1vw, 14px);
   letter-spacing: 0.6em;
   color: rgba(79,141,255,0.85);
-  margin-bottom: 24px;
+  margin-bottom: 36px;
   opacity: 0;
 }
 .scene-04.active .s4-num {
-  animation: fadeUp 0.7s ease-out 0.3s forwards;
+  animation: fadeUp 0.7s ease-out 0.5s forwards;
 }
-.scene-04 .s4-headline {
-  font-size: clamp(58px, 7vw, 110px);
-  font-weight: 200;
-  color: #fff;
-  line-height: 1.1;
-  letter-spacing: 0.02em;
-  opacity: 0;
-}
-.scene-04 .s4-headline-em {
-  color: #4f8dff;
-  font-weight: 400;
-}
-.scene-04.active .s4-headline {
-  animation: pop 1s cubic-bezier(0.16,1,0.3,1) 1.0s forwards;
-}
-.scene-04 .s4-sub {
-  margin-top: 28px;
+.scene-04 .s4-arrows {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  margin-bottom: 50px;
   font-family: 'Inter', sans-serif;
-  font-size: clamp(11px, 1vw, 14px);
-  letter-spacing: 0.5em;
-  color: rgba(255,255,255,0.5);
+  font-size: clamp(80px, 11vw, 180px);
+  color: #4f8dff;
+  font-weight: 200;
+  line-height: 1;
+}
+.scene-04 .s4-arrow {
+  opacity: 0;
+  transform: translateX(-40px);
+}
+@keyframes arrowSlide04 {
+  to { opacity: 1; transform: translateX(0); }
+}
+.scene-04.active .s4-arrow:nth-child(1) { animation: arrowSlide04 0.7s cubic-bezier(0.16,1,0.3,1) 1.2s forwards; }
+.scene-04.active .s4-arrow:nth-child(2) { animation: arrowSlide04 0.7s cubic-bezier(0.16,1,0.3,1) 1.5s forwards; }
+.scene-04.active .s4-arrow:nth-child(3) { animation: arrowSlide04 0.7s cubic-bezier(0.16,1,0.3,1) 1.8s forwards; }
+.scene-04 .s4-target {
+  font-size: clamp(20px, 2.2vw, 32px);
+  color: #fff;
+  font-weight: 300;
+  letter-spacing: 0.1em;
   opacity: 0;
 }
-.scene-04.active .s4-sub {
-  animation: fadeIn 0.7s ease-out 2.3s forwards;
+.scene-04.active .s4-target {
+  animation: fadeUp 0.9s ease-out 2.6s forwards;
+}
+.scene-04 .s4-target-en {
+  margin-top: 22px;
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(11px, 1vw, 13px);
+  letter-spacing: 0.5em;
+  color: rgba(79,141,255,0.6);
+  opacity: 0;
+}
+.scene-04.active .s4-target-en {
+  animation: fadeIn 0.8s ease-out 3.4s forwards;
 }
 
 /* ============================================================
@@ -1638,11 +1655,15 @@ html, body {
          SCENE 04 · AXIS 01 宣言
          ============================================= -->
     <section class="scene scene-04" data-scene="04">
-      <div class="s4-bg-text">EXPAND</div>
-      <div class="s4-center">
+      <div class="s4-content">
         <div class="s4-num">AXIS / 01</div>
-        <div class="s4-headline">商圏を、<br><span class="s4-headline-em">広げる</span>。</div>
-        <div class="s4-sub">THREE ROUTES · ONE GOAL</div>
+        <div class="s4-arrows">
+          <span class="s4-arrow">→</span>
+          <span class="s4-arrow">→</span>
+          <span class="s4-arrow">→</span>
+        </div>
+        <div class="s4-target">日本の医療美容市場へ。</div>
+        <div class="s4-target-en">THREE ROUTES · ONE GOAL</div>
       </div>
     </section>
 
