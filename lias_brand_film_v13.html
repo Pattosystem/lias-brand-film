@@ -1353,53 +1353,16 @@ html, body {
 }
 
 /* ============================================================
-   SCENE 12 · AXIS 03 SYSTEM · コード風 + AI画像背景
+   SCENE 12 · AXIS 03 SYSTEM · シンプル版
    ============================================================ */
 .scene-12 {
   background: #0a0a0a;
   font-family: 'SF Mono', 'Menlo', monospace;
-  overflow: hidden;
-  position: relative;
-}
-.scene-12 .s12-image-wrap {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  opacity: 0;
-  z-index: 0;
-}
-.scene-12.active .s12-image-wrap {
-  animation: fadeIn 2s ease-out 0.3s forwards;
-}
-.scene-12 .s12-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center right;
-  opacity: 0.45;
-  filter: saturate(1.0) brightness(0.9);
-  transform: scale(1.05);
-  transition: transform 14s ease-out;
-}
-.scene-12.active .s12-image {
-  transform: scale(1.12);
-}
-.scene-12 .s12-image-overlay {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(90deg, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.7) 45%, rgba(10,10,10,0.2) 80%, rgba(10,10,10,0.4) 100%);
-  pointer-events: none;
-  z-index: 1;
-}
-.scene-12 .s12-content {
-  position: absolute;
-  inset: 0;
-  z-index: 5;
   padding: 50px 70px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  overflow: hidden;
 }
 .scene-12 .s12-header {
   display: flex;
@@ -1411,10 +1374,9 @@ html, body {
   opacity: 0;
   padding-bottom: 14px;
   border-bottom: 1px solid rgba(251,191,36,0.2);
-  max-width: 65%;
 }
 .scene-12.active .s12-header {
-  animation: fadeIn 0.5s ease-out 0.5s forwards;
+  animation: fadeIn 0.5s ease-out 0.3s forwards;
 }
 .scene-12 .s12-blink::after {
   content: '_';
@@ -1429,27 +1391,24 @@ html, body {
   margin-bottom: 12px;
   letter-spacing: 0.02em;
   opacity: 0;
-  text-shadow: 0 2px 20px rgba(0,0,0,0.7);
 }
 .scene-12.active .s12-axis {
-  animation: fadeUp 0.8s ease-out 0.9s forwards;
+  animation: fadeUp 0.8s ease-out 0.7s forwards;
 }
 .scene-12 .s12-sub {
   font-family: 'Hiragino Sans', sans-serif;
   font-size: clamp(13px, 1.1vw, 16px);
-  color: rgba(255,255,255,0.7);
+  color: rgba(255,255,255,0.55);
   margin-bottom: 32px;
   opacity: 0;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.6);
 }
 .scene-12.active .s12-sub {
-  animation: fadeUp 0.7s ease-out 1.4s forwards;
+  animation: fadeUp 0.7s ease-out 1.2s forwards;
 }
 .scene-12 .s12-list {
   font-size: clamp(13px, 1.15vw, 16px);
-  color: rgba(255,255,255,0.9);
+  color: rgba(255,255,255,0.85);
   line-height: 1.9;
-  max-width: 65%;
 }
 .scene-12 .s12-row {
   display: flex;
@@ -1457,7 +1416,6 @@ html, body {
   gap: 18px;
   padding: 4px 0;
   opacity: 0;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
 }
 .scene-12 .s12-tag-ai,
 .scene-12 .s12-tag-human {
@@ -1468,24 +1426,23 @@ html, body {
   font-weight: 700;
   text-align: center;
   min-width: 70px;
-  backdrop-filter: blur(4px);
 }
 .scene-12 .s12-tag-ai {
   color: #fbbf24;
   border: 1px solid rgba(251,191,36,0.5);
-  background: rgba(251,191,36,0.12);
+  background: rgba(251,191,36,0.08);
 }
 .scene-12 .s12-tag-human {
   color: #4f8dff;
   border: 1px solid rgba(79,141,255,0.5);
-  background: rgba(79,141,255,0.12);
+  background: rgba(79,141,255,0.08);
 }
-.scene-12.active .s12-row-1 { animation: fadeLeft 0.5s ease-out 2.0s forwards; }
-.scene-12.active .s12-row-2 { animation: fadeLeft 0.5s ease-out 2.4s forwards; }
-.scene-12.active .s12-row-3 { animation: fadeLeft 0.5s ease-out 2.8s forwards; }
-.scene-12.active .s12-row-4 { animation: fadeLeft 0.5s ease-out 3.2s forwards; }
-.scene-12.active .s12-row-5 { animation: fadeLeft 0.5s ease-out 3.6s forwards; }
-.scene-12.active .s12-row-6 { animation: fadeLeft 0.5s ease-out 4.0s forwards; }
+.scene-12.active .s12-row-1 { animation: fadeLeft 0.5s ease-out 1.8s forwards; }
+.scene-12.active .s12-row-2 { animation: fadeLeft 0.5s ease-out 2.2s forwards; }
+.scene-12.active .s12-row-3 { animation: fadeLeft 0.5s ease-out 2.6s forwards; }
+.scene-12.active .s12-row-4 { animation: fadeLeft 0.5s ease-out 3.0s forwards; }
+.scene-12.active .s12-row-5 { animation: fadeLeft 0.5s ease-out 3.4s forwards; }
+.scene-12.active .s12-row-6 { animation: fadeLeft 0.5s ease-out 3.8s forwards; }
 .scene-12 .s12-footer {
   margin-top: 30px;
   font-family: 'Hiragino Sans', sans-serif;
@@ -1495,11 +1452,9 @@ html, body {
   padding-top: 14px;
   border-top: 1px solid rgba(251,191,36,0.2);
   letter-spacing: 0.03em;
-  max-width: 65%;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.6);
 }
 .scene-12.active .s12-footer {
-  animation: fadeIn 0.7s ease-out 4.6s forwards;
+  animation: fadeIn 0.7s ease-out 4.4s forwards;
 }
 
 /* ============================================================
@@ -2033,27 +1988,21 @@ html, body {
          SCENE 12 · AXIS 03 SYSTEM
          ============================================= -->
     <section class="scene scene-12" data-scene="12">
-      <div class="s12-image-wrap">
-        <img class="s12-image" src="images/ai.png" alt="AI automation">
+      <div class="s12-header">
+        <span>// AXIS / 03 · SYSTEM</span>
+        <span class="s12-blink">RUNTIME · 24/7</span>
       </div>
-      <div class="s12-image-overlay"></div>
-      <div class="s12-content">
-        <div class="s12-header">
-          <span>// AXIS / 03 · SYSTEM</span>
-          <span class="s12-blink">RUNTIME · 24/7</span>
-        </div>
-        <div class="s12-axis">回す力を、強くする。</div>
-        <div class="s12-sub">// 役割をはっきり分けて、商圏に時間を注ぐ</div>
-        <div class="s12-list">
-          <div class="s12-row s12-row-1"><span class="s12-tag-ai">AI</span><span>仕入原価の管理 — 為替リアルタイム</span></div>
-          <div class="s12-row s12-row-2"><span class="s12-tag-ai">AI</span><span>受注 → 納品ステータス追跡</span></div>
-          <div class="s12-row s12-row-3"><span class="s12-tag-ai">AI</span><span>入金確認・請求書&amp;領収書発行</span></div>
-          <div class="s12-row s12-row-4"><span class="s12-tag-ai">AI</span><span>取引先情報の一元管理</span></div>
-          <div class="s12-row s12-row-5"><span class="s12-tag-human">HUMAN</span><span>判断・交渉・関係構築</span></div>
-          <div class="s12-row s12-row-6"><span class="s12-tag-human">HUMAN</span><span>商圏に時間を注ぐ。攻めの仕事に集中</span></div>
-        </div>
-        <div class="s12-footer">// AIが作業を引き受ける分、人は攻めに集中できる。</div>
+      <div class="s12-axis">回す力を、強くする。</div>
+      <div class="s12-sub">// 役割をはっきり分けて、商圏に時間を注ぐ</div>
+      <div class="s12-list">
+        <div class="s12-row s12-row-1"><span class="s12-tag-ai">AI</span><span>仕入原価の管理 — 為替リアルタイム</span></div>
+        <div class="s12-row s12-row-2"><span class="s12-tag-ai">AI</span><span>受注 → 納品ステータス追跡</span></div>
+        <div class="s12-row s12-row-3"><span class="s12-tag-ai">AI</span><span>入金確認・請求書&amp;領収書発行</span></div>
+        <div class="s12-row s12-row-4"><span class="s12-tag-ai">AI</span><span>取引先情報の一元管理</span></div>
+        <div class="s12-row s12-row-5"><span class="s12-tag-human">HUMAN</span><span>判断・交渉・関係構築</span></div>
+        <div class="s12-row s12-row-6"><span class="s12-tag-human">HUMAN</span><span>商圏に時間を注ぐ。攻めの仕事に集中</span></div>
       </div>
+      <div class="s12-footer">// AIが作業を引き受ける分、人は攻めに集中できる。</div>
     </section>
 
     <!-- =============================================
