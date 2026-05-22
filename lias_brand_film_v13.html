@@ -1039,11 +1039,14 @@ html, body {
 }
 
 /* ============================================================
-   SCENE 11 · AXIS 02 ACADEMY · 画像メイン(フル表示)
+   SCENE 11 · AXIS 02 ACADEMY · 画像は薄い背景、文字が主役
    ============================================================ */
 .scene-11 {
   background: #0a0a0f;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .scene-11::before {
   content: 'AXIS / 02 · VALUE';
@@ -1052,7 +1055,7 @@ html, body {
   font-family: 'Inter', sans-serif;
   font-size: clamp(10px, 0.85vw, 12px);
   letter-spacing: 0.5em;
-  color: rgba(212,175,55,0.95);
+  color: rgba(212,175,55,0.85);
   opacity: 0;
   z-index: 20;
 }
@@ -1066,81 +1069,113 @@ html, body {
   opacity: 0;
 }
 .scene-11.active .s11-image-wrap {
-  animation: fadeIn 1.5s ease-out 0.3s forwards;
+  animation: fadeIn 1.8s ease-out 0.3s forwards;
 }
 .scene-11 .s11-image {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   object-position: center;
-  transform: scale(1);
-  transition: transform 10s ease-out;
+  opacity: 0.22;
+  filter: blur(2px) saturate(1.1);
+  transform: scale(1.05);
+  transition: transform 12s ease-out;
 }
 .scene-11.active .s11-image {
-  transform: scale(1.03);
+  transform: scale(1.12);
 }
-.scene-11 .s11-image-bg {
+.scene-11 .s11-image-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, #f5f0e6 0%, #e8e0d0 100%);
-  z-index: -1;
-}
-.scene-11 .s11-overlay-bottom {
-  position: absolute;
-  left: 0; right: 0;
-  bottom: 0;
-  height: 38%;
-  background: linear-gradient(180deg, transparent 0%, rgba(10,10,15,0.7) 50%, rgba(10,10,15,0.95) 100%);
+  background:
+    radial-gradient(ellipse at center, rgba(10,10,15,0.5) 0%, rgba(10,10,15,0.9) 80%),
+    linear-gradient(180deg, rgba(10,10,15,0.6) 0%, rgba(10,10,15,0.85) 100%);
   pointer-events: none;
-  opacity: 0;
-  z-index: 5;
-}
-.scene-11.active .s11-overlay-bottom {
-  animation: fadeIn 1.2s ease-out 1.5s forwards;
+  z-index: 1;
 }
 .scene-11 .s11-text {
-  position: absolute;
-  left: 0; right: 0;
-  bottom: 40px;
-  text-align: center;
-  padding: 0 60px;
+  position: relative;
   z-index: 10;
+  text-align: center;
+  max-width: 80%;
   opacity: 0;
 }
 .scene-11.active .s11-text {
-  animation: fadeUp 1.2s ease-out 2.0s forwards;
+  animation: fadeUp 1.2s ease-out 1.0s forwards;
+}
+.scene-11 .s11-emblem-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 26px;
+}
+.scene-11 .s11-emblem-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #d4af37;
+}
+.scene-11 .s11-emblem-line {
+  width: 40px;
+  height: 1px;
+  background: rgba(212,175,55,0.4);
+}
+.scene-11 .s11-emblem-text {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(10px, 0.85vw, 12px);
+  letter-spacing: 0.5em;
+  color: #d4af37;
 }
 .scene-11 .s11-headline {
   font-family: 'Hiragino Mincho ProN', serif;
-  font-size: clamp(32px, 3.6vw, 54px);
+  font-size: clamp(40px, 4.6vw, 70px);
   color: #fff;
-  margin-bottom: 18px;
-  line-height: 1.25;
+  margin-bottom: 22px;
+  line-height: 1.3;
   letter-spacing: 0.02em;
-  text-shadow: 0 2px 20px rgba(0,0,0,0.8);
+  text-shadow: 0 4px 30px rgba(0,0,0,0.8);
 }
 .scene-11 .s11-headline strong {
   color: #d4af37;
   font-weight: 600;
 }
-.scene-11 .s11-divider {
-  width: 60px;
+.scene-11 .s11-divider-center {
+  width: 80px;
   height: 1px;
-  background: #d4af37;
-  margin: 16px auto;
+  background: linear-gradient(90deg, transparent, #d4af37, transparent);
+  margin: 30px auto;
+  opacity: 0;
+}
+.scene-11.active .s11-divider-center {
+  animation: fadeIn 1s ease-out 2.6s forwards;
 }
 .scene-11 .s11-body {
-  font-size: clamp(12px, 1.05vw, 15px);
+  font-size: clamp(13px, 1.2vw, 17px);
   color: rgba(255,255,255,0.85);
-  line-height: 1.7;
-  max-width: 700px;
-  margin: 0 auto;
+  line-height: 1.85;
   letter-spacing: 0.03em;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+  max-width: 800px;
+  margin: 0 auto;
+  opacity: 0;
+  text-shadow: 0 2px 15px rgba(0,0,0,0.9);
+}
+.scene-11.active .s11-body {
+  animation: fadeUp 1s ease-out 3.0s forwards;
 }
 .scene-11 .s11-body strong {
   color: #d4af37;
   font-weight: 500;
+}
+.scene-11 .s11-meta {
+  margin-top: 36px;
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(10px, 0.85vw, 12px);
+  letter-spacing: 0.5em;
+  color: rgba(212,175,55,0.75);
+  opacity: 0;
+}
+.scene-11.active .s11-meta {
+  animation: fadeIn 1s ease-out 4.0s forwards;
 }
 
 /* ============================================================
@@ -1741,17 +1776,24 @@ html, body {
          ============================================= -->
     <section class="scene scene-11" data-scene="11">
       <div class="s11-image-wrap">
-        <div class="s11-image-bg"></div>
         <img class="s11-image" src="images/academy.png" alt="VANDS & LIAS Medical Academy">
       </div>
-      <div class="s11-overlay-bottom"></div>
+      <div class="s11-image-overlay"></div>
       <div class="s11-text">
-        <div class="s11-headline"><strong>価値を、上げる。</strong>物販を、超えていく。</div>
-        <div class="s11-divider"></div>
+        <div class="s11-emblem-row">
+          <span class="s11-emblem-line"></span>
+          <span class="s11-emblem-dot"></span>
+          <span class="s11-emblem-text">VANDS &amp; LIAS · ACADEMY</span>
+          <span class="s11-emblem-dot"></span>
+          <span class="s11-emblem-line"></span>
+        </div>
+        <div class="s11-headline"><strong>価値を、上げる。</strong><br>物販を、超えていく。</div>
+        <div class="s11-divider-center"></div>
         <div class="s11-body">
           韓国で<strong>40店舗以上を展開</strong>する最大手のベンスクリニックと組み、<br>
           商材だけでなく、技術とノウハウまで、医療従事者に届ける教育機関。
         </div>
+        <div class="s11-meta">FIRST SESSION · 2026.06.28</div>
       </div>
     </section>
 
