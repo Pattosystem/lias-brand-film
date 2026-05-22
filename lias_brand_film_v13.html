@@ -993,7 +993,7 @@ html, body {
 }
 
 /* ============================================================
-   SCENE 09 · JJMEDITEC · テック・グローバル
+   SCENE 09 · JJMEDITEC · テック・グローバル(右に画像)
    ============================================================ */
 .scene-09 {
   background: linear-gradient(135deg, #0e2e3a 0%, #14b8a6 100%);
@@ -1001,35 +1001,38 @@ html, body {
   overflow: hidden;
   position: relative;
 }
-.scene-09 .s9-deco {
+.scene-09 .s9-image-wrap {
   position: absolute;
-  right: -100px; top: 50%;
-  transform: translateY(-50%);
+  right: 0; top: 0;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
   opacity: 0;
+  z-index: 1;
 }
-.scene-09.active .s9-deco {
-  animation: fadeIn 1.5s ease-out 0.5s forwards;
+.scene-09.active .s9-image-wrap {
+  animation: fadeIn 1.5s ease-out 0.4s forwards;
 }
-.scene-09 .s9-c1 {
-  width: 240px; height: 240px;
-  border-radius: 50%;
-  border: 1px solid rgba(255,255,255,0.18);
+.scene-09 .s9-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.75;
+  filter: saturate(0.95) brightness(0.95);
+  transform: scale(1.05);
+  transition: transform 14s ease-out;
+  mix-blend-mode: lighten;
+}
+.scene-09.active .s9-image {
+  transform: scale(1.12);
+}
+.scene-09 .s9-image-overlay {
   position: absolute;
-  right: 0; top: -120px;
-}
-.scene-09 .s9-c2 {
-  width: 400px; height: 400px;
-  border-radius: 50%;
-  border: 1px solid rgba(255,255,255,0.08);
-  position: absolute;
-  right: -80px; top: -200px;
-}
-.scene-09 .s9-c3 {
-  width: 120px; height: 120px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(94,234,212,0.3) 0%, transparent 70%);
-  position: absolute;
-  right: 60px; top: -60px;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(14,46,58,0.95) 0%, rgba(14,46,58,0.6) 30%, rgba(14,46,58,0.15) 60%, transparent 100%);
+  pointer-events: none;
+  z-index: 2;
 }
 .scene-09 .s9-content {
   position: relative; z-index: 10;
@@ -1039,7 +1042,7 @@ html, body {
   font-family: 'Inter', sans-serif;
   font-size: clamp(9px, 0.8vw, 11px);
   letter-spacing: 0.4em;
-  color: rgba(255,255,255,0.6);
+  color: rgba(255,255,255,0.7);
   margin-bottom: 20px;
   opacity: 0;
 }
@@ -1059,6 +1062,8 @@ html, body {
   color: rgba(255,255,255,0.95);
   margin-bottom: 28px;
   opacity: 0;
+  backdrop-filter: blur(8px);
+  background: rgba(0,0,0,0.2);
 }
 .scene-09.active .s9-badge {
   animation: fadeUp 0.7s ease-out 0.7s forwards;
@@ -1078,6 +1083,7 @@ html, body {
   line-height: 0.92;
   letter-spacing: -0.025em;
   opacity: 0;
+  text-shadow: 0 4px 30px rgba(0,0,0,0.5);
 }
 .scene-09.active .s9-headline {
   animation: fadeUp 1s ease-out 1.3s forwards;
@@ -1090,6 +1096,7 @@ html, body {
   line-height: 0.92;
   letter-spacing: -0.025em;
   opacity: 0;
+  text-shadow: 0 4px 30px rgba(0,0,0,0.5);
 }
 .scene-09.active .s9-headline-2 {
   animation: fadeUp 1s ease-out 1.7s forwards;
@@ -1098,9 +1105,10 @@ html, body {
   margin-top: 26px;
   font-size: clamp(13px, 1.15vw, 17px);
   letter-spacing: 0.08em;
-  color: rgba(255,255,255,0.85);
+  color: rgba(255,255,255,0.9);
   line-height: 1.6;
   opacity: 0;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.4);
 }
 .scene-09.active .s9-tagline {
   animation: fadeIn 0.7s ease-out 2.5s forwards;
@@ -1116,10 +1124,11 @@ html, body {
   animation: fadeIn 0.8s ease-out 3.2s forwards;
 }
 .scene-09 .s9-feature {
-  background: rgba(0,0,0,0.2);
-  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.2);
   border-radius: 4px;
   padding: 10px 14px;
+  backdrop-filter: blur(8px);
 }
 .scene-09 .s9-feature-key {
   font-family: 'Inter', sans-serif;
@@ -1130,7 +1139,7 @@ html, body {
 }
 .scene-09 .s9-feature-label {
   font-size: clamp(9px, 0.8vw, 11px);
-  color: rgba(255,255,255,0.7);
+  color: rgba(255,255,255,0.8);
   letter-spacing: 0.1em;
   margin-top: 2px;
 }
@@ -1904,11 +1913,10 @@ html, body {
          SCENE 09 · JJMEDITEC
          ============================================= -->
     <section class="scene scene-09" data-scene="09">
-      <div class="s9-deco">
-        <div class="s9-c1"></div>
-        <div class="s9-c2"></div>
-        <div class="s9-c3"></div>
+      <div class="s9-image-wrap">
+        <img class="s9-image" src="images/jjmeditec.jpg" alt="Korea x Japan Medical">
       </div>
+      <div class="s9-image-overlay"></div>
       <div class="s9-content">
         <div class="s9-tag">ROUTE / C · JJMEDITEC</div>
         <div class="s9-badge"><span class="s9-badge-icon">KR</span> KOREA × JAPAN MEDICAL</div>
