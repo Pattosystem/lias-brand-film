@@ -1003,12 +1003,15 @@ html, body {
 }
 .scene-09 .s9-image-wrap {
   position: absolute;
-  right: 0; top: 0;
-  width: 50%;
-  height: 100%;
+  right: 0; top: 50%;
+  transform: translateY(-50%);
+  width: 55%;
+  height: 75%;
   overflow: hidden;
   opacity: 0;
   z-index: 1;
+  -webkit-mask-image: radial-gradient(ellipse 55% 60% at center, rgba(0,0,0,1) 0%, rgba(0,0,0,0.9) 40%, rgba(0,0,0,0.3) 75%, transparent 100%);
+  mask-image: radial-gradient(ellipse 55% 60% at center, rgba(0,0,0,1) 0%, rgba(0,0,0,0.9) 40%, rgba(0,0,0,0.3) 75%, transparent 100%);
 }
 .scene-09.active .s9-image-wrap {
   animation: fadeIn 1.5s ease-out 0.4s forwards;
@@ -1018,8 +1021,8 @@ html, body {
   height: 100%;
   object-fit: cover;
   object-position: center;
-  opacity: 0.75;
-  filter: saturate(0.95) brightness(0.95);
+  opacity: 0.9;
+  filter: saturate(1.0) brightness(1.0);
   transform: scale(1.05);
   transition: transform 14s ease-out;
   mix-blend-mode: lighten;
@@ -1030,7 +1033,7 @@ html, body {
 .scene-09 .s9-image-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(14,46,58,0.95) 0%, rgba(14,46,58,0.6) 30%, rgba(14,46,58,0.15) 60%, transparent 100%);
+  background: linear-gradient(90deg, rgba(14,46,58,0.7) 0%, rgba(14,46,58,0.2) 35%, transparent 65%, transparent 100%);
   pointer-events: none;
   z-index: 2;
 }
