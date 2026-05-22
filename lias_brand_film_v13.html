@@ -347,13 +347,13 @@ html, body {
    SCENE 04 · AXIS 01 宣言 · 矢印で外に向かう
    ============================================================ */
 .scene-04 {
-  background: #0a0a0f;
+  background: #050508;
   overflow: hidden;
 }
 .scene-04::before {
-  content: 'CHAPTER 03 · AXIS 01';
+  content: 'CHAPTER 02 · AXIS 01';
   position: absolute;
-  top: 24px; left: 32px;
+  top: 30px; left: 40px;
   font-family: 'Inter', sans-serif;
   font-size: clamp(10px, 0.85vw, 12px);
   letter-spacing: 0.5em;
@@ -364,65 +364,93 @@ html, body {
 .scene-04.active::before {
   animation: fadeIn 0.6s ease-out 0.3s forwards;
 }
-.scene-04 .s4-content {
+.scene-04 .s4-title-wrap {
   position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
+  top: 90px; left: 40px; right: 40px;
   z-index: 5;
 }
-.scene-04 .s4-num {
-  font-family: 'Inter', sans-serif;
-  font-size: clamp(11px, 1vw, 14px);
-  letter-spacing: 0.6em;
-  color: rgba(79,141,255,0.85);
-  margin-bottom: 36px;
-  opacity: 0;
-}
-.scene-04.active .s4-num {
-  animation: fadeUp 0.7s ease-out 0.5s forwards;
-}
-.scene-04 .s4-arrows {
-  display: flex;
-  justify-content: center;
-  gap: 18px;
-  margin-bottom: 50px;
-  font-family: 'Inter', sans-serif;
-  font-size: clamp(80px, 11vw, 180px);
-  color: #4f8dff;
+.scene-04 .s4-pre {
+  font-family: 'Hiragino Mincho ProN', serif;
+  font-size: clamp(20px, 2vw, 30px);
   font-weight: 200;
-  line-height: 1;
-}
-.scene-04 .s4-arrow {
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
   opacity: 0;
-  transform: translateX(-40px);
 }
-@keyframes arrowSlide04 {
-  to { opacity: 1; transform: translateX(0); }
+.scene-04.active .s4-pre {
+  animation: fadeUp 0.7s ease-out 1.0s forwards;
 }
-.scene-04.active .s4-arrow:nth-child(1) { animation: arrowSlide04 0.7s cubic-bezier(0.16,1,0.3,1) 1.2s forwards; }
-.scene-04.active .s4-arrow:nth-child(2) { animation: arrowSlide04 0.7s cubic-bezier(0.16,1,0.3,1) 1.5s forwards; }
-.scene-04.active .s4-arrow:nth-child(3) { animation: arrowSlide04 0.7s cubic-bezier(0.16,1,0.3,1) 1.8s forwards; }
-.scene-04 .s4-target {
-  font-size: clamp(20px, 2.2vw, 32px);
-  color: #fff;
+.scene-04 .s4-big {
+  font-family: 'Hiragino Mincho ProN', serif;
+  font-size: clamp(48px, 6vw, 90px);
   font-weight: 300;
-  letter-spacing: 0.1em;
+  color: #fff;
+  letter-spacing: 0.04em;
+  line-height: 1.1;
   opacity: 0;
 }
-.scene-04.active .s4-target {
-  animation: fadeUp 0.9s ease-out 2.6s forwards;
+.scene-04 .s4-big strong {
+  color: #4f8dff;
+  font-weight: 500;
 }
-.scene-04 .s4-target-en {
-  margin-top: 22px;
+.scene-04.active .s4-big {
+  animation: fadeUp 0.9s ease-out 2.5s forwards;
+}
+.scene-04 .s4-circles {
+  position: absolute;
+  bottom: 100px; left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: clamp(40px, 6vw, 80px);
+  align-items: center;
+  z-index: 5;
+}
+.scene-04 .s4-circle {
+  width: clamp(80px, 9vw, 130px);
+  height: clamp(80px, 9vw, 130px);
+  border-radius: 50%;
+  border: 2px solid #4f8dff;
+  background: rgba(79,141,255,0.08);
+  opacity: 0;
+  position: relative;
+}
+.scene-04 .s4-circle::before {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border-radius: 50%;
+  border: 1px solid rgba(79,141,255,0.3);
+}
+.scene-04 .s4-line-c {
+  width: clamp(20px, 3vw, 50px);
+  height: 1px;
+  background: rgba(79,141,255,0.6);
+  opacity: 0;
+}
+@keyframes s4Pop {
+  0% { opacity: 0; transform: scale(0.7); }
+  60% { opacity: 1; transform: scale(1.1); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.scene-04.active .s4-circle-1 { animation: s4Pop 0.7s cubic-bezier(0.16,1,0.3,1) 5.0s forwards; }
+.scene-04.active .s4-line-1 { animation: fadeIn 0.4s ease-out 5.4s forwards; }
+.scene-04.active .s4-circle-2 { animation: s4Pop 0.7s cubic-bezier(0.16,1,0.3,1) 5.6s forwards; }
+.scene-04.active .s4-line-2 { animation: fadeIn 0.4s ease-out 6.0s forwards; }
+.scene-04.active .s4-circle-3 { animation: s4Pop 0.7s cubic-bezier(0.16,1,0.3,1) 6.2s forwards; }
+.scene-04 .s4-sub {
+  position: absolute;
+  bottom: 50px; left: 0; right: 0;
+  text-align: center;
   font-family: 'Inter', sans-serif;
-  font-size: clamp(11px, 1vw, 13px);
+  font-size: clamp(10px, 0.85vw, 12px);
   letter-spacing: 0.5em;
   color: rgba(79,141,255,0.6);
   opacity: 0;
+  z-index: 5;
 }
-.scene-04.active .s4-target-en {
-  animation: fadeIn 0.8s ease-out 3.4s forwards;
+.scene-04.active .s4-sub {
+  animation: fadeIn 0.6s ease-out 7.0s forwards;
 }
 
 /* ============================================================
@@ -1729,16 +1757,18 @@ html, body {
          SCENE 04 · AXIS 01 宣言
          ============================================= -->
     <section class="scene scene-04" data-scene="04">
-      <div class="s4-content">
-        <div class="s4-num">AXIS / 01</div>
-        <div class="s4-arrows">
-          <span class="s4-arrow">→</span>
-          <span class="s4-arrow">→</span>
-          <span class="s4-arrow">→</span>
-        </div>
-        <div class="s4-target">日本の医療美容市場へ。</div>
-        <div class="s4-target-en">THREE ROUTES · ONE GOAL</div>
+      <div class="s4-title-wrap">
+        <div class="s4-pre">一つ目のテーマは。</div>
+        <div class="s4-big">商圏を、<strong>広げる。</strong></div>
       </div>
+      <div class="s4-circles">
+        <div class="s4-circle s4-circle-1"></div>
+        <div class="s4-line-c s4-line-1"></div>
+        <div class="s4-circle s4-circle-2"></div>
+        <div class="s4-line-c s4-line-2"></div>
+        <div class="s4-circle s4-circle-3"></div>
+      </div>
+      <div class="s4-sub">THREE APPROACHES</div>
     </section>
 
     <!-- =============================================
