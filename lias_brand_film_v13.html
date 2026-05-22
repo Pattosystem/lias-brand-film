@@ -1358,10 +1358,6 @@ html, body {
 .scene-12 {
   background: #0a0a0a;
   font-family: 'SF Mono', 'Menlo', monospace;
-  padding: 50px 70px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   overflow: hidden;
   position: relative;
 }
@@ -1396,9 +1392,14 @@ html, body {
   pointer-events: none;
   z-index: 1;
 }
-.scene-12 > *:not(.s12-image-wrap):not(.s12-image-overlay) {
-  position: relative;
+.scene-12 .s12-content {
+  position: absolute;
+  inset: 0;
   z-index: 5;
+  padding: 50px 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .scene-12 .s12-header {
   display: flex;
@@ -2036,21 +2037,23 @@ html, body {
         <img class="s12-image" src="images/ai.png" alt="AI automation">
       </div>
       <div class="s12-image-overlay"></div>
-      <div class="s12-header">
-        <span>// AXIS / 03 · SYSTEM</span>
-        <span class="s12-blink">RUNTIME · 24/7</span>
+      <div class="s12-content">
+        <div class="s12-header">
+          <span>// AXIS / 03 · SYSTEM</span>
+          <span class="s12-blink">RUNTIME · 24/7</span>
+        </div>
+        <div class="s12-axis">回す力を、強くする。</div>
+        <div class="s12-sub">// 役割をはっきり分けて、商圏に時間を注ぐ</div>
+        <div class="s12-list">
+          <div class="s12-row s12-row-1"><span class="s12-tag-ai">AI</span><span>仕入原価の管理 — 為替リアルタイム</span></div>
+          <div class="s12-row s12-row-2"><span class="s12-tag-ai">AI</span><span>受注 → 納品ステータス追跡</span></div>
+          <div class="s12-row s12-row-3"><span class="s12-tag-ai">AI</span><span>入金確認・請求書&amp;領収書発行</span></div>
+          <div class="s12-row s12-row-4"><span class="s12-tag-ai">AI</span><span>取引先情報の一元管理</span></div>
+          <div class="s12-row s12-row-5"><span class="s12-tag-human">HUMAN</span><span>判断・交渉・関係構築</span></div>
+          <div class="s12-row s12-row-6"><span class="s12-tag-human">HUMAN</span><span>商圏に時間を注ぐ。攻めの仕事に集中</span></div>
+        </div>
+        <div class="s12-footer">// AIが作業を引き受ける分、人は攻めに集中できる。</div>
       </div>
-      <div class="s12-axis">回す力を、強くする。</div>
-      <div class="s12-sub">// 役割をはっきり分けて、商圏に時間を注ぐ</div>
-      <div class="s12-list">
-        <div class="s12-row s12-row-1"><span class="s12-tag-ai">AI</span><span>仕入原価の管理 — 為替リアルタイム</span></div>
-        <div class="s12-row s12-row-2"><span class="s12-tag-ai">AI</span><span>受注 → 納品ステータス追跡</span></div>
-        <div class="s12-row s12-row-3"><span class="s12-tag-ai">AI</span><span>入金確認・請求書&amp;領収書発行</span></div>
-        <div class="s12-row s12-row-4"><span class="s12-tag-ai">AI</span><span>取引先情報の一元管理</span></div>
-        <div class="s12-row s12-row-5"><span class="s12-tag-human">HUMAN</span><span>判断・交渉・関係構築</span></div>
-        <div class="s12-row s12-row-6"><span class="s12-tag-human">HUMAN</span><span>商圏に時間を注ぐ。攻めの仕事に集中</span></div>
-      </div>
-      <div class="s12-footer">// AIが作業を引き受ける分、人は攻めに集中できる。</div>
     </section>
 
     <!-- =============================================
