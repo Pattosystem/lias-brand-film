@@ -717,61 +717,96 @@ html, body {
 }
 
 /* ============================================================
-   SCENE 07 · PITTO 起源 · 回想
+   SCENE 07 · PITTO 起源 · 回想(画像+手紙)
    ============================================================ */
 .scene-07 {
   background: linear-gradient(135deg, #2a2018 0%, #1a1410 100%);
-  padding: 50px;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 0;
   overflow: hidden;
 }
-.scene-07 .s7-paper {
-  width: 100%; height: 100%;
-  background:
-    linear-gradient(135deg, rgba(212,175,55,0.06) 0%, rgba(212,175,55,0.02) 100%);
-  border: 1px solid rgba(212,175,55,0.25);
-  padding: 60px 80px;
+.scene-07 .s7-image-wrap {
   position: relative;
+  overflow: hidden;
+  opacity: 0;
+  background: #1a1410;
+}
+.scene-07.active .s7-image-wrap {
+  animation: fadeIn 1.5s ease-out 0.3s forwards;
+}
+.scene-07 .s7-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: sepia(0.35) saturate(0.85) brightness(0.85);
+  transform: scale(1);
+  transition: transform 12s ease-out;
+}
+.scene-07.active .s7-image {
+  transform: scale(1.05);
+}
+.scene-07 .s7-image-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(135deg, rgba(42,32,24,0.2) 0%, rgba(26,20,16,0.7) 100%),
+    linear-gradient(90deg, transparent 60%, rgba(26,20,16,0.9) 100%);
+  pointer-events: none;
+}
+.scene-07 .s7-paper {
+  padding: 50px 60px 50px 40px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   opacity: 0;
 }
 .scene-07.active .s7-paper {
-  animation: fadeIn 1.5s ease-out 0.4s forwards;
+  animation: fadeLeft 1.2s ease-out 1.0s forwards;
 }
 .scene-07 .s7-paper::before {
   content: '"';
   position: absolute;
-  top: -20px; left: 30px;
+  top: 20px; left: 20px;
   font-family: 'Inter', serif;
-  font-size: clamp(120px, 14vw, 200px);
-  color: rgba(212,175,55,0.2);
+  font-size: clamp(80px, 10vw, 140px);
+  color: rgba(212,175,55,0.25);
   line-height: 0.8;
 }
 .scene-07 .s7-paper::after {
   content: '"';
   position: absolute;
-  bottom: 60px; right: 60px;
+  bottom: 30px; right: 30px;
   font-family: 'Inter', serif;
-  font-size: clamp(120px, 14vw, 200px);
-  color: rgba(212,175,55,0.2);
+  font-size: clamp(80px, 10vw, 140px);
+  color: rgba(212,175,55,0.25);
   line-height: 0.8;
 }
 .scene-07 .s7-letter {
   font-family: 'Hiragino Mincho ProN', serif;
-  font-size: clamp(12px, 1vw, 14px);
+  font-size: clamp(11px, 0.95vw, 13px);
   color: rgba(212,175,55,0.85);
   letter-spacing: 0.3em;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
   opacity: 0;
+  position: relative;
+  z-index: 2;
 }
 .scene-07.active .s7-letter {
-  animation: fadeIn 1.2s ease-out 1.4s forwards;
+  animation: fadeIn 1s ease-out 1.6s forwards;
 }
 .scene-07 .s7-quote {
   font-family: 'Hiragino Mincho ProN', serif;
-  font-size: clamp(28px, 3.2vw, 48px);
+  font-size: clamp(24px, 2.6vw, 40px);
   line-height: 1.6;
   color: #d4af37;
-  margin: 30px 0 50px;
+  margin: 24px 0 38px;
   opacity: 0;
+  position: relative;
+  z-index: 2;
+  letter-spacing: 0.02em;
 }
 .scene-07 .s7-quote em {
   font-style: normal;
@@ -779,17 +814,19 @@ html, body {
   font-weight: 500;
 }
 .scene-07.active .s7-quote {
-  animation: fadeUp 1.2s ease-out 2.4s forwards;
+  animation: fadeUp 1.2s ease-out 2.2s forwards;
 }
 .scene-07 .s7-signature {
   font-family: 'Hiragino Mincho ProN', serif;
-  font-size: clamp(13px, 1.15vw, 17px);
-  color: rgba(212,175,55,0.7);
+  font-size: clamp(12px, 1.05vw, 15px);
+  color: rgba(212,175,55,0.75);
   text-align: right;
   opacity: 0;
+  position: relative;
+  z-index: 2;
 }
 .scene-07.active .s7-signature {
-  animation: fadeIn 1s ease-out 4.0s forwards;
+  animation: fadeIn 1s ease-out 3.6s forwards;
 }
 .scene-07 .s7-signature strong {
   color: #d4af37;
@@ -1761,6 +1798,10 @@ html, body {
          SCENE 07 · PITTO 起源
          ============================================= -->
     <section class="scene scene-07" data-scene="07">
+      <div class="s7-image-wrap">
+        <img class="s7-image" src="images/pitto2.jpg" alt="PITTO origin">
+        <div class="s7-image-overlay"></div>
+      </div>
       <div class="s7-paper">
         <div class="s7-letter">A NOTE FROM THE BEGINNING</div>
         <div class="s7-quote">
