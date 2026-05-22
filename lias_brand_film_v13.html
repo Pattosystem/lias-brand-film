@@ -1,0 +1,2119 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>LIAS Brand Film v13 — 2026</title>
+<style>
+/* ============================================================
+   GLOBAL RESET & BASE
+   ============================================================ */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: #000;
+  color: #fff;
+  font-family: 'Hiragino Sans', sans-serif;
+  height: 100%;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================================
+   FILM STAGE — 動画の枠
+   ============================================================ */
+.film {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #050508;
+  overflow: hidden;
+}
+.stage-frame {
+  position: relative;
+  width: 100%;
+  max-width: 1400px;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 30px 100px rgba(0,0,0,0.7);
+  margin: 0 24px;
+}
+
+/* シーンコンテナ */
+.scene {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+}
+.scene.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ============================================================
+   COMMON ANIMATIONS
+   ============================================================ */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeLeft { from { opacity: 0; transform: translateX(-25px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes fadeRight { from { opacity: 0; transform: translateX(25px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes pop {
+  0% { opacity: 0; transform: scale(0.85); }
+  60% { opacity: 1; transform: scale(1.05); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes drawLine { to { stroke-dashoffset: 0; } }
+@keyframes flash {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+@keyframes growBar { to { transform: scaleY(1); } }
+@keyframes blink { 50% { opacity: 0; } }
+@keyframes rotateSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ============================================================
+   SCENE 01 · PROLOGUE · 静寂
+   ============================================================ */
+.scene-01 { background: #000; }
+.scene-01 .s1-text {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(14px, 1.4vw, 18px);
+  letter-spacing: 0.8em;
+  color: rgba(255,255,255,0.4);
+  opacity: 0;
+}
+.scene-01.active .s1-text {
+  animation: fadeIn 1.8s ease-out 0.5s forwards;
+}
+.scene-01 .s1-flash {
+  position: absolute; inset: 0; background: white; opacity: 0;
+}
+.scene-01.active .s1-flash {
+  animation: flash 0.45s ease-out 3.5s forwards;
+}
+.scene-01 .s1-logo {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center; opacity: 0;
+}
+.scene-01.active .s1-logo {
+  animation: fadeIn 1.2s ease-out 4.0s forwards;
+}
+.s1-logo-text {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(60px, 8vw, 110px);
+  font-weight: 200;
+  letter-spacing: 0.25em;
+  color: #fff;
+  line-height: 1;
+}
+.s1-logo-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(10px, 0.95vw, 13px);
+  letter-spacing: 0.5em;
+  color: rgba(255,255,255,0.45);
+  margin-top: 18px;
+}
+
+/* ============================================================
+   SCENE 02 · THE BUSINESS · ドキュメンタリー
+   ============================================================ */
+.scene-02 {
+  background: linear-gradient(180deg, #0a1828 0%, #0a0a14 100%);
+}
+.scene-02::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(79,141,255,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(79,141,255,0.05) 0%, transparent 50%);
+  pointer-events: none;
+}
+.scene-02 .s2-hud {
+  position: absolute;
+  top: 24px; left: 32px; right: 32px;
+  display: flex; justify-content: space-between;
+  font-family: 'SF Mono', monospace;
+  font-size: clamp(9px, 0.7vw, 11px);
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.2em;
+  opacity: 0;
+  z-index: 5;
+}
+.scene-02.active .s2-hud { animation: fadeIn 0.5s ease-out 0.3s forwards; }
+.s2-rec {
+  color: #ef4444; display: flex; align-items: center; gap: 8px;
+}
+.s2-rec-dot {
+  width: 7px; height: 7px; background: #ef4444; border-radius: 50%;
+  animation: blink 1s infinite;
+}
+.scene-02 .s2-corner-tl, .scene-02 .s2-corner-tr,
+.scene-02 .s2-corner-bl, .scene-02 .s2-corner-br {
+  position: absolute;
+  width: 20px; height: 20px;
+  border-color: rgba(255,255,255,0.3);
+  border-style: solid;
+  opacity: 0;
+  z-index: 5;
+}
+.scene-02 .s2-corner-tl { top: 60px; left: 32px; border-width: 1px 0 0 1px; }
+.scene-02 .s2-corner-tr { top: 60px; right: 32px; border-width: 1px 1px 0 0; }
+.scene-02 .s2-corner-bl { bottom: 32px; left: 32px; border-width: 0 0 1px 1px; }
+.scene-02 .s2-corner-br { bottom: 32px; right: 32px; border-width: 0 1px 1px 0; }
+.scene-02.active [class*="s2-corner"] {
+  animation: fadeIn 0.8s ease-out 0.5s forwards;
+}
+.scene-02 .s2-content {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  max-width: 78%;
+  z-index: 3;
+}
+.scene-02 .s2-fact {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(10px, 0.85vw, 13px);
+  letter-spacing: 0.5em;
+  color: rgba(79,141,255,0.7);
+  margin-bottom: 24px;
+  opacity: 0;
+}
+.scene-02.active .s2-fact {
+  animation: fadeUp 0.8s ease-out 0.8s forwards;
+}
+.scene-02 .s2-main {
+  font-size: clamp(22px, 2.4vw, 36px);
+  font-weight: 200;
+  color: #fff;
+  line-height: 1.55;
+  letter-spacing: 0.02em;
+  opacity: 0;
+}
+.scene-02.active .s2-main {
+  animation: fadeUp 0.9s ease-out 1.6s forwards;
+}
+.scene-02 .s2-strike {
+  margin-top: 28px;
+  font-size: clamp(15px, 1.4vw, 20px);
+  color: rgba(255,255,255,0.4);
+  position: relative;
+  display: inline-block;
+  opacity: 0;
+}
+.scene-02.active .s2-strike {
+  animation: fadeIn 0.7s ease-out 3.0s forwards;
+}
+.scene-02 .s2-strike::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  top: 50%;
+  height: 1.5px;
+  background: rgba(239,68,68,0.7);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+.scene-02.active .s2-strike::after {
+  animation: drawStrike 0.8s ease-out 3.7s forwards;
+}
+@keyframes drawStrike { to { transform: scaleX(1); } }
+.scene-02 .s2-conclusion {
+  margin-top: 26px;
+  font-size: clamp(18px, 1.9vw, 26px);
+  color: #4f8dff;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  opacity: 0;
+}
+.scene-02.active .s2-conclusion {
+  animation: fadeUp 0.9s ease-out 4.5s forwards;
+}
+.scene-02 .s2-happy { color: #4f8dff; font-weight: 500; }
+
+/* ============================================================
+   SCENE 03 · THE STRATEGY · 雑誌風
+   ============================================================ */
+.scene-03 {
+  background: #f5f3ee;
+  color: #1a1a1a;
+  padding: 60px 80px;
+  display: grid;
+  grid-template-columns: 1fr 1.8fr;
+  gap: 50px;
+  align-items: center;
+}
+.scene-03::before {
+  content: 'THE STRATEGY · 002';
+  position: absolute;
+  top: 30px; left: 40px;
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(10px, 0.8vw, 12px);
+  letter-spacing: 0.4em;
+  color: rgba(0,0,0,0.4);
+  opacity: 0;
+}
+.scene-03.active::before {
+  animation: fadeIn 0.6s ease-out 0.3s forwards;
+}
+.scene-03 .s3-num {
+  font-family: 'Inter', serif;
+  font-size: clamp(140px, 19vw, 280px);
+  font-weight: 100;
+  color: #1a1a1a;
+  line-height: 0.85;
+  letter-spacing: -0.05em;
+  opacity: 0;
+}
+.scene-03.active .s3-num {
+  animation: fadeUp 1.2s ease-out 0.6s forwards;
+}
+.scene-03 .s3-content {
+  padding-left: 32px;
+  border-left: 2px solid #1a1a1a;
+}
+.scene-03 .s3-eyebrow {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(10px, 0.85vw, 13px);
+  letter-spacing: 0.5em;
+  color: rgba(0,0,0,0.65);
+  margin-bottom: 20px;
+  opacity: 0;
+}
+.scene-03.active .s3-eyebrow {
+  animation: fadeLeft 0.7s ease-out 1.4s forwards;
+}
+.scene-03 .s3-headline {
+  font-size: clamp(36px, 4vw, 60px);
+  font-weight: 300;
+  color: #1a1a1a;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  opacity: 0;
+}
+.scene-03.active .s3-headline {
+  animation: fadeLeft 0.9s ease-out 1.9s forwards;
+}
+.scene-03 .s3-headline strong { font-weight: 600; }
+.scene-03 .s3-body {
+  font-size: clamp(13px, 1.15vw, 17px);
+  color: rgba(0,0,0,0.7);
+  margin-top: 26px;
+  line-height: 1.8;
+  letter-spacing: 0.02em;
+  opacity: 0;
+}
+.scene-03.active .s3-body {
+  animation: fadeLeft 0.7s ease-out 2.7s forwards;
+}
+
+/* ============================================================
+   SCENE 04 · AXIS 01 宣言 · 広告コピー
+   ============================================================ */
+.scene-04 {
+  background: #0a0a0f;
+  overflow: hidden;
+}
+.scene-04 .s4-bg-text {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(280px, 32vw, 480px);
+  font-weight: 900;
+  color: rgba(79,141,255,0.05);
+  letter-spacing: -0.05em;
+  white-space: nowrap;
+  opacity: 0;
+}
+.scene-04.active .s4-bg-text {
+  animation: fadeIn 1.2s ease-out 0.5s forwards;
+}
+.scene-04 .s4-center {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 5;
+}
+.scene-04 .s4-num {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(11px, 1vw, 14px);
+  letter-spacing: 0.6em;
+  color: rgba(79,141,255,0.85);
+  margin-bottom: 24px;
+  opacity: 0;
+}
+.scene-04.active .s4-num {
+  animation: fadeUp 0.7s ease-out 0.3s forwards;
+}
+.scene-04 .s4-headline {
+  font-size: clamp(58px, 7vw, 110px);
+  font-weight: 200;
+  color: #fff;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  opacity: 0;
+}
+.scene-04 .s4-headline-em {
+  color: #4f8dff;
+  font-weight: 400;
+}
+.scene-04.active .s4-headline {
+  animation: pop 1s cubic-bezier(0.16,1,0.3,1) 1.0s forwards;
+}
+.scene-04 .s4-sub {
+  margin-top: 28px;
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(11px, 1vw, 14px);
+  letter-spacing: 0.5em;
+  color: rgba(255,255,255,0.5);
+  opacity: 0;
+}
+.scene-04.active .s4-sub {
+  animation: fadeIn 0.7s ease-out 2.3s forwards;
+}
+
+/* ============================================================
+   SCENE 05 · THE NET · データ可視化
+   ============================================================ */
+.scene-05 {
+  background: #0a0d18;
+  padding: 50px 70px;
+}
+.scene-05 .s5-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 40px;
+  opacity: 0;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: 16px;
+}
+.scene-05.active .s5-header {
+  animation: fadeIn 0.6s ease-out 0.3s forwards;
+}
+.scene-05 .s5-title {
+  font-size: clamp(14px, 1.2vw, 18px);
+  color: rgba(255,255,255,0.7);
+  letter-spacing: 0.15em;
+}
+.scene-05 .s5-title strong {
+  color: #4f8dff;
+  font-weight: 500;
+}
+.scene-05 .s5-meta {
+  font-family: 'SF Mono', monospace;
+  font-size: clamp(9px, 0.75vw, 11px);
+  color: rgba(79,141,255,0.6);
+  letter-spacing: 0.2em;
+}
+.scene-05 .s5-chart-area {
+  position: relative;
+  height: calc(100% - 80px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  padding: 0 40px 60px;
+}
+.scene-05 .s5-grid {
+  position: absolute;
+  top: 0; bottom: 60px;
+  left: 0; right: 0;
+}
+.scene-05 .s5-grid-line {
+  position: absolute;
+  left: 0; right: 0;
+  height: 1px;
+  background: rgba(255,255,255,0.05);
+  opacity: 0;
+}
+.scene-05.active .s5-grid-line:nth-child(1) { animation: fadeIn 0.4s ease-out 0.6s forwards; }
+.scene-05.active .s5-grid-line:nth-child(2) { animation: fadeIn 0.4s ease-out 0.8s forwards; }
+.scene-05.active .s5-grid-line:nth-child(3) { animation: fadeIn 0.4s ease-out 1.0s forwards; }
+.scene-05 .s5-bar-group {
+  position: relative;
+  text-align: center;
+  flex: 1;
+  z-index: 2;
+  max-width: 200px;
+}
+.scene-05 .s5-bar-wrap {
+  position: relative;
+  height: 80%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.scene-05 .s5-bar {
+  width: 80px;
+  background: linear-gradient(180deg, #4f8dff 0%, #2563eb 100%);
+  transform-origin: bottom;
+  transform: scaleY(0);
+  position: relative;
+}
+.scene-05 .s5-bar-1 { height: 80%; }
+.scene-05 .s5-bar-2 { height: 60%; background: linear-gradient(180deg, #7aa9ff 0%, #4f8dff 100%); }
+.scene-05 .s5-bar-3 { height: 95%; background: linear-gradient(180deg, #a4c2ff 0%, #7aa9ff 100%); }
+.scene-05.active .s5-bar-1 { animation: growBar 1.2s cubic-bezier(0.16,1,0.3,1) 1.4s forwards; }
+.scene-05.active .s5-bar-2 { animation: growBar 1.2s cubic-bezier(0.16,1,0.3,1) 2.0s forwards; }
+.scene-05.active .s5-bar-3 { animation: growBar 1.2s cubic-bezier(0.16,1,0.3,1) 2.6s forwards; }
+.scene-05 .s5-bar-top-label {
+  position: absolute;
+  top: -28px; left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(9px, 0.75vw, 11px);
+  letter-spacing: 0.2em;
+  color: rgba(79,141,255,0.7);
+  white-space: nowrap;
+  opacity: 0;
+}
+.scene-05.active .s5-bar-group:nth-child(1) .s5-bar-top-label { animation: fadeIn 0.5s ease-out 2.4s forwards; }
+.scene-05.active .s5-bar-group:nth-child(2) .s5-bar-top-label { animation: fadeIn 0.5s ease-out 3.0s forwards; }
+.scene-05.active .s5-bar-group:nth-child(3) .s5-bar-top-label { animation: fadeIn 0.5s ease-out 3.6s forwards; }
+.scene-05 .s5-bar-bottom {
+  margin-top: 22px;
+  opacity: 0;
+}
+.scene-05.active .s5-bar-group:nth-child(1) .s5-bar-bottom { animation: fadeUp 0.5s ease-out 2.6s forwards; }
+.scene-05.active .s5-bar-group:nth-child(2) .s5-bar-bottom { animation: fadeUp 0.5s ease-out 3.2s forwards; }
+.scene-05.active .s5-bar-group:nth-child(3) .s5-bar-bottom { animation: fadeUp 0.5s ease-out 3.8s forwards; }
+.scene-05 .s5-bar-name {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(14px, 1.3vw, 18px);
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+.scene-05 .s5-bar-desc {
+  font-size: clamp(10px, 0.9vw, 12px);
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.05em;
+}
+.scene-05 .s5-caption {
+  position: absolute;
+  bottom: 22px; left: 0; right: 0;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(10px, 0.85vw, 12px);
+  letter-spacing: 0.4em;
+  color: rgba(79,141,255,0.7);
+  opacity: 0;
+}
+.scene-05.active .s5-caption { animation: fadeIn 0.8s ease-out 4.3s forwards; }
+
+/* ============================================================
+   SCENE 06 · PITTO · ブランドCM
+   ============================================================ */
+.scene-06 {
+  background: linear-gradient(135deg, #1a2a4f 0%, #0a1530 100%);
+  padding: 50px 70px;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 50px;
+  align-items: center;
+}
+.scene-06::before {
+  content: 'CHAPTER 03 · ROUTE A';
+  position: absolute;
+  top: 30px; left: 40px;
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(10px, 0.85vw, 12px);
+  letter-spacing: 0.4em;
+  color: rgba(212,175,55,0.7);
+  opacity: 0;
+}
+.scene-06.active::before {
+  animation: fadeIn 0.6s ease-out 0.3s forwards;
+}
+.scene-06 .s6-mock {
+  background: rgba(0,0,0,0.5);
+  border: 1px solid rgba(212,175,55,0.4);
+  border-radius: 8px;
+  padding: 30px;
+  opacity: 0;
+}
+.scene-06.active .s6-mock {
+  animation: fadeLeft 0.9s ease-out 0.6s forwards;
+}
+.scene-06 .s6-mock-logo {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(24px, 2.4vw, 36px);
+  font-weight: 700;
+  color: #d4af37;
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+}
+.scene-06 .s6-mock-logo::before { content: '⌂  '; }
+.scene-06 .s6-mock-url {
+  font-family: 'SF Mono', monospace;
+  font-size: clamp(10px, 0.85vw, 12px);
+  color: rgba(212,175,55,0.5);
+  margin-bottom: 26px;
+}
+.scene-06 .s6-mock-banner {
+  background: linear-gradient(135deg, rgba(212,175,55,0.18) 0%, rgba(255,255,255,0.04) 100%);
+  border: 1px solid rgba(212,175,55,0.3);
+  border-radius: 4px;
+  padding: 24px;
+  text-align: center;
+}
+.scene-06 .s6-mock-date {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(20px, 2vw, 30px);
+  font-weight: 700;
+  color: #d4af37;
+  letter-spacing: 0.02em;
+  margin-bottom: 8px;
+}
+.scene-06 .s6-mock-academy {
+  font-size: clamp(14px, 1.2vw, 18px);
+  color: #fff;
+  line-height: 1.4;
+}
+.scene-06 .s6-mock-tag {
+  font-size: clamp(9px, 0.75vw, 11px);
+  letter-spacing: 0.4em;
+  color: rgba(212,175,55,0.6);
+  margin-top: 12px;
+}
+.scene-06 .s6-text {
+  opacity: 0;
+}
+.scene-06.active .s6-text {
+  animation: fadeRight 0.9s ease-out 1.4s forwards;
+}
+.scene-06 .s6-route {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(11px, 0.95vw, 13px);
+  color: #d4af37;
+  letter-spacing: 0.5em;
+  margin-bottom: 14px;
+}
+.scene-06 .s6-name {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(56px, 6.5vw, 92px);
+  font-weight: 700;
+  color: #d4af37;
+  letter-spacing: -0.01em;
+  line-height: 0.95;
+  margin-bottom: 24px;
+}
+.scene-06 .s6-tagline {
+  font-size: clamp(15px, 1.4vw, 20px);
+  color: #fff;
+  line-height: 1.6;
+  font-weight: 300;
+  margin-bottom: 12px;
+}
+.scene-06 .s6-tagline strong {
+  color: #d4af37;
+  font-weight: 500;
+}
+.scene-06 .s6-points {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(212,175,55,0.3);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.scene-06 .s6-point {
+  font-size: clamp(11px, 0.9vw, 13px);
+  color: rgba(255,255,255,0.7);
+}
+.scene-06 .s6-point-num {
+  font-family: 'Inter', sans-serif;
+  color: #d4af37;
+  font-size: clamp(9px, 0.75vw, 11px);
+  letter-spacing: 0.3em;
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* ============================================================
+   SCENE 07 · PITTO 起源 · 回想
+   ============================================================ */
+.scene-07 {
+  background: linear-gradient(135deg, #2a2018 0%, #1a1410 100%);
+  padding: 50px;
+  overflow: hidden;
+}
+.scene-07 .s7-paper {
+  width: 100%; height: 100%;
+  background:
+    linear-gradient(135deg, rgba(212,175,55,0.06) 0%, rgba(212,175,55,0.02) 100%);
+  border: 1px solid rgba(212,175,55,0.25);
+  padding: 60px 80px;
+  position: relative;
+  opacity: 0;
+}
+.scene-07.active .s7-paper {
+  animation: fadeIn 1.5s ease-out 0.4s forwards;
+}
+.scene-07 .s7-paper::before {
+  content: '"';
+  position: absolute;
+  top: -20px; left: 30px;
+  font-family: 'Inter', serif;
+  font-size: clamp(120px, 14vw, 200px);
+  color: rgba(212,175,55,0.2);
+  line-height: 0.8;
+}
+.scene-07 .s7-paper::after {
+  content: '"';
+  position: absolute;
+  bottom: 60px; right: 60px;
+  font-family: 'Inter', serif;
+  font-size: clamp(120px, 14vw, 200px);
+  color: rgba(212,175,55,0.2);
+  line-height: 0.8;
+}
+.scene-07 .s7-letter {
+  font-family: 'Hiragino Mincho ProN', serif;
+  font-size: clamp(12px, 1vw, 14px);
+  color: rgba(212,175,55,0.85);
+  letter-spacing: 0.3em;
+  margin-bottom: 32px;
+  opacity: 0;
+}
+.scene-07.active .s7-letter {
+  animation: fadeIn 1.2s ease-out 1.4s forwards;
+}
+.scene-07 .s7-quote {
+  font-family: 'Hiragino Mincho ProN', serif;
+  font-size: clamp(28px, 3.2vw, 48px);
+  line-height: 1.6;
+  color: #d4af37;
+  margin: 30px 0 50px;
+  opacity: 0;
+}
+.scene-07 .s7-quote em {
+  font-style: normal;
+  color: #fff;
+  font-weight: 500;
+}
+.scene-07.active .s7-quote {
+  animation: fadeUp 1.2s ease-out 2.4s forwards;
+}
+.scene-07 .s7-signature {
+  font-family: 'Hiragino Mincho ProN', serif;
+  font-size: clamp(13px, 1.15vw, 17px);
+  color: rgba(212,175,55,0.7);
+  text-align: right;
+  opacity: 0;
+}
+.scene-07.active .s7-signature {
+  animation: fadeIn 1s ease-out 4.0s forwards;
+}
+.scene-07 .s7-signature strong {
+  color: #d4af37;
+  font-weight: 600;
+}
+
+/* ============================================================
+   SCENE 08 · MEDIXOR · データ分析
+   ============================================================ */
+.scene-08 {
+  background: #0a0d18;
+  padding: 50px 70px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+.scene-08::before {
+  content: 'CHAPTER 03 · ROUTE B';
+  position: absolute;
+  top: 30px; left: 40px;
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(10px, 0.85vw, 12px);
+  letter-spacing: 0.4em;
+  color: rgba(200,165,100,0.7);
+  opacity: 0;
+}
+.scene-08.active::before {
+  animation: fadeIn 0.6s ease-out 0.3s forwards;
+}
+.scene-08 .s8-left { opacity: 0; }
+.scene-08.active .s8-left {
+  animation: fadeLeft 0.9s ease-out 0.6s forwards;
+}
+.scene-08 .s8-logo {
+  font-family: 'Inter', sans-serif;
+  font-style: italic;
+  font-size: clamp(48px, 5.5vw, 76px);
+  font-weight: 200;
+  color: #c8a564;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.scene-08 .s8-tag {
+  font-size: clamp(9px, 0.8vw, 12px);
+  letter-spacing: 0.5em;
+  color: rgba(200,165,100,0.6);
+  margin-bottom: 36px;
+}
+.scene-08 .s8-stats {
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.scene-08 .s8-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  opacity: 0;
+}
+.scene-08 .s8-stat-label {
+  font-size: clamp(12px, 1vw, 15px);
+  color: rgba(255,255,255,0.65);
+  letter-spacing: 0.05em;
+}
+.scene-08 .s8-stat-num {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(24px, 2.4vw, 36px);
+  font-weight: 300;
+  color: #c8a564;
+  letter-spacing: -0.02em;
+}
+.scene-08 .s8-stat-num small {
+  font-size: clamp(11px, 1vw, 14px);
+  color: rgba(200,165,100,0.6);
+  margin-left: 4px;
+  font-weight: 400;
+}
+.scene-08.active .s8-stat:nth-child(1) { animation: fadeIn 0.6s ease-out 1.4s forwards; }
+.scene-08.active .s8-stat:nth-child(2) { animation: fadeIn 0.6s ease-out 1.8s forwards; }
+.scene-08.active .s8-stat:nth-child(3) { animation: fadeIn 0.6s ease-out 2.2s forwards; }
+.scene-08.active .s8-stat:nth-child(4) { animation: fadeIn 0.6s ease-out 2.6s forwards; }
+.scene-08 .s8-right {
+  opacity: 0;
+  align-self: center;
+  padding-left: 30px;
+  border-left: 2px solid rgba(200,165,100,0.4);
+}
+.scene-08.active .s8-right {
+  animation: fadeRight 0.9s ease-out 3.2s forwards;
+}
+.scene-08 .s8-route {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(10px, 0.85vw, 12px);
+  letter-spacing: 0.5em;
+  color: rgba(200,165,100,0.7);
+  margin-bottom: 14px;
+}
+.scene-08 .s8-headline {
+  font-size: clamp(26px, 2.6vw, 38px);
+  font-weight: 200;
+  color: #fff;
+  line-height: 1.3;
+  margin-bottom: 18px;
+  letter-spacing: 0.02em;
+}
+.scene-08 .s8-headline strong {
+  color: #c8a564;
+  font-weight: 500;
+}
+.scene-08 .s8-body {
+  font-size: clamp(12px, 1.05vw, 15px);
+  color: rgba(255,255,255,0.65);
+  line-height: 1.8;
+  letter-spacing: 0.02em;
+}
+
+/* ============================================================
+   SCENE 09 · JJMEDITEC · テック・グローバル
+   ============================================================ */
+.scene-09 {
+  background: linear-gradient(135deg, #0e2e3a 0%, #14b8a6 100%);
+  padding: 50px 70px;
+  overflow: hidden;
+  position: relative;
+}
+.scene-09 .s9-deco {
+  position: absolute;
+  right: -100px; top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+}
+.scene-09.active .s9-deco {
+  animation: fadeIn 1.5s ease-out 0.5s forwards;
+}
+.scene-09 .s9-c1 {
+  width: 240px; height: 240px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.18);
+  position: absolute;
+  right: 0; top: -120px;
+}
+.scene-09 .s9-c2 {
+  width: 400px; height: 400px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.08);
+  position: absolute;
+  right: -80px; top: -200px;
+}
+.scene-09 .s9-c3 {
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(94,234,212,0.3) 0%, transparent 70%);
+  position: absolute;
+  right: 60px; top: -60px;
+}
+.scene-09 .s9-content {
+  position: relative; z-index: 10;
+  max-width: 60%;
+}
+.scene-09 .s9-tag {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(9px, 0.8vw, 11px);
+  letter-spacing: 0.4em;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 20px;
+  opacity: 0;
+}
+.scene-09.active .s9-tag {
+  animation: fadeIn 0.6s ease-out 0.3s forwards;
+}
+.scene-09 .s9-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid rgba(255,255,255,0.4);
+  padding: 6px 14px;
+  border-radius: 30px;
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(10px, 0.85vw, 12px);
+  letter-spacing: 0.25em;
+  color: rgba(255,255,255,0.95);
+  margin-bottom: 28px;
+  opacity: 0;
+}
+.scene-09.active .s9-badge {
+  animation: fadeUp 0.7s ease-out 0.7s forwards;
+}
+.scene-09 .s9-badge-icon {
+  background: rgba(255,255,255,0.2);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 700;
+}
+.scene-09 .s9-headline {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(54px, 6.5vw, 100px);
+  font-weight: 900;
+  color: #fff;
+  line-height: 0.92;
+  letter-spacing: -0.025em;
+  opacity: 0;
+}
+.scene-09.active .s9-headline {
+  animation: fadeUp 1s ease-out 1.3s forwards;
+}
+.scene-09 .s9-headline-2 {
+  color: #5eead4;
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(54px, 6.5vw, 100px);
+  font-weight: 900;
+  line-height: 0.92;
+  letter-spacing: -0.025em;
+  opacity: 0;
+}
+.scene-09.active .s9-headline-2 {
+  animation: fadeUp 1s ease-out 1.7s forwards;
+}
+.scene-09 .s9-tagline {
+  margin-top: 26px;
+  font-size: clamp(13px, 1.15vw, 17px);
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.6;
+  opacity: 0;
+}
+.scene-09.active .s9-tagline {
+  animation: fadeIn 0.7s ease-out 2.5s forwards;
+}
+.scene-09 .s9-features {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 16px;
+  opacity: 0;
+}
+.scene-09.active .s9-features {
+  animation: fadeIn 0.8s ease-out 3.2s forwards;
+}
+.scene-09 .s9-feature {
+  background: rgba(0,0,0,0.2);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 4px;
+  padding: 10px 14px;
+}
+.scene-09 .s9-feature-key {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(14px, 1.3vw, 18px);
+  font-weight: 700;
+  color: #5eead4;
+  letter-spacing: 0;
+}
+.scene-09 .s9-feature-label {
+  font-size: clamp(9px, 0.8vw, 11px);
+  color: rgba(255,255,255,0.7);
+  letter-spacing: 0.1em;
+  margin-top: 2px;
+}
+
+/* ============================================================
+   SCENE 10 · AXIS 01 まとめ · 余韻
+   ============================================================ */
+.scene-10 {
+  background: #050508;
+  display: flex; align-items: center; justify-content: center;
+}
+.scene-10 .s10-stack {
+  text-align: center;
+}
+.scene-10 .s10-tag {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(10px, 0.85vw, 13px);
+  letter-spacing: 0.6em;
+  color: rgba(79,141,255,0.6);
+  margin-bottom: 50px;
+  opacity: 0;
+}
+.scene-10.active .s10-tag {
+  animation: fadeIn 0.7s ease-out 0.4s forwards;
+}
+.scene-10 .s10-line {
+  display: flex; align-items: center;
+  justify-content: center;
+  gap: 36px; margin: 16px 0;
+}
+.scene-10 .s10-word {
+  font-size: clamp(40px, 5vw, 72px);
+  font-weight: 200;
+  color: #fff;
+  letter-spacing: 0.06em;
+  opacity: 0;
+}
+.scene-10 .s10-sep {
+  width: 50px; height: 1px;
+  background: rgba(79,141,255,0.45);
+  opacity: 0;
+}
+.scene-10.active .s10-word:nth-of-type(1) { animation: fadeIn 0.7s ease-out 1.2s forwards; }
+.scene-10.active .s10-sep:nth-of-type(1) { animation: fadeIn 0.7s ease-out 1.8s forwards; }
+.scene-10.active .s10-word:nth-of-type(2) { animation: fadeIn 0.7s ease-out 2.2s forwards; }
+.scene-10.active .s10-sep:nth-of-type(2) { animation: fadeIn 0.7s ease-out 2.8s forwards; }
+.scene-10.active .s10-word:nth-of-type(3) { animation: fadeIn 0.7s ease-out 3.2s forwards; }
+.scene-10 .s10-conclusion {
+  margin-top: 56px;
+  font-size: clamp(16px, 1.5vw, 22px);
+  color: rgba(255,255,255,0.55);
+  letter-spacing: 0.05em;
+  opacity: 0;
+}
+.scene-10.active .s10-conclusion {
+  animation: fadeIn 0.9s ease-out 4.2s forwards;
+}
+.scene-10 .s10-but {
+  margin-top: 18px;
+  font-size: clamp(14px, 1.3vw, 18px);
+  color: #4f8dff;
+  letter-spacing: 0.05em;
+  opacity: 0;
+}
+.scene-10.active .s10-but {
+  animation: fadeUp 0.8s ease-out 5.0s forwards;
+}
+
+/* ============================================================
+   SCENE 11 · AXIS 02 ACADEMY · 画像メイン
+   ============================================================ */
+.scene-11 {
+  background: #0a0a0f;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 0;
+}
+.scene-11::before {
+  content: 'AXIS / 02 · VALUE';
+  position: absolute;
+  top: 24px; left: 32px;
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(10px, 0.85vw, 12px);
+  letter-spacing: 0.5em;
+  color: rgba(212,175,55,0.85);
+  opacity: 0;
+  z-index: 10;
+}
+.scene-11.active::before {
+  animation: fadeIn 0.6s ease-out 0.3s forwards;
+}
+.scene-11 .s11-image-wrap {
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+}
+.scene-11.active .s11-image-wrap {
+  animation: fadeIn 1.2s ease-out 0.4s forwards;
+}
+.scene-11 .s11-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transform: scale(1);
+  transition: transform 8s ease-out;
+}
+.scene-11.active .s11-image {
+  transform: scale(1.05);
+}
+.scene-11 .s11-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 60%, #0a0a0f 100%);
+  pointer-events: none;
+}
+.scene-11 .s11-content {
+  padding: 50px 50px 50px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: linear-gradient(135deg, #1a0f15 0%, #0a0a0f 100%);
+  opacity: 0;
+}
+.scene-11.active .s11-content {
+  animation: fadeLeft 1s ease-out 1.0s forwards;
+}
+.scene-11 .s11-emblem-line {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+.scene-11 .s11-emblem-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #d4af37;
+}
+.scene-11 .s11-emblem-text {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(10px, 0.85vw, 12px);
+  letter-spacing: 0.5em;
+  color: #d4af37;
+}
+.scene-11 .s11-headline {
+  font-family: 'Hiragino Mincho ProN', serif;
+  font-size: clamp(32px, 3.6vw, 52px);
+  color: #fff;
+  margin-bottom: 24px;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+}
+.scene-11 .s11-headline strong {
+  color: #d4af37;
+  font-weight: 600;
+}
+.scene-11 .s11-body {
+  font-size: clamp(13px, 1.1vw, 16px);
+  color: rgba(255,255,255,0.78);
+  line-height: 1.85;
+  border-top: 1px solid rgba(212,175,55,0.3);
+  padding-top: 22px;
+  margin-top: 14px;
+  letter-spacing: 0.02em;
+}
+.scene-11 .s11-body strong {
+  color: #d4af37;
+  font-weight: 500;
+}
+.scene-11 .s11-meta {
+  margin-top: 26px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.scene-11 .s11-meta-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, #d4af37, transparent);
+}
+.scene-11 .s11-meta-text {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(9px, 0.8vw, 11px);
+  letter-spacing: 0.4em;
+  color: rgba(212,175,55,0.7);
+}
+
+/* ============================================================
+   SCENE 12 · AXIS 03 SYSTEM · コード風
+   ============================================================ */
+.scene-12 {
+  background: #0a0a0a;
+  font-family: 'SF Mono', 'Menlo', monospace;
+  padding: 50px 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.scene-12 .s12-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: clamp(10px, 0.85vw, 12px);
+  color: rgba(251,191,36,0.7);
+  letter-spacing: 0.25em;
+  margin-bottom: 30px;
+  opacity: 0;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(251,191,36,0.2);
+}
+.scene-12.active .s12-header {
+  animation: fadeIn 0.5s ease-out 0.3s forwards;
+}
+.scene-12 .s12-blink::after {
+  content: '_';
+  margin-left: 4px;
+  animation: blink 1s infinite;
+}
+.scene-12 .s12-axis {
+  font-family: 'Hiragino Sans', sans-serif;
+  font-size: clamp(36px, 4vw, 56px);
+  font-weight: 300;
+  color: #fbbf24;
+  margin-bottom: 12px;
+  letter-spacing: 0.02em;
+  opacity: 0;
+}
+.scene-12.active .s12-axis {
+  animation: fadeUp 0.8s ease-out 0.7s forwards;
+}
+.scene-12 .s12-sub {
+  font-family: 'Hiragino Sans', sans-serif;
+  font-size: clamp(13px, 1.1vw, 16px);
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 36px;
+  opacity: 0;
+}
+.scene-12.active .s12-sub {
+  animation: fadeUp 0.7s ease-out 1.2s forwards;
+}
+.scene-12 .s12-list {
+  font-size: clamp(13px, 1.15vw, 16px);
+  color: rgba(255,255,255,0.85);
+  line-height: 1.9;
+}
+.scene-12 .s12-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 4px 0;
+  opacity: 0;
+}
+.scene-12 .s12-tag-ai,
+.scene-12 .s12-tag-human {
+  font-family: 'SF Mono', monospace;
+  padding: 3px 10px;
+  border-radius: 3px;
+  font-size: clamp(10px, 0.85vw, 12px);
+  font-weight: 700;
+  text-align: center;
+  min-width: 70px;
+}
+.scene-12 .s12-tag-ai {
+  color: #fbbf24;
+  border: 1px solid rgba(251,191,36,0.5);
+  background: rgba(251,191,36,0.08);
+}
+.scene-12 .s12-tag-human {
+  color: #4f8dff;
+  border: 1px solid rgba(79,141,255,0.5);
+  background: rgba(79,141,255,0.08);
+}
+.scene-12 .s12-arrow {
+  color: rgba(255,255,255,0.3);
+  margin: 0 8px;
+}
+.scene-12.active .s12-row:nth-child(1) { animation: fadeLeft 0.5s ease-out 1.8s forwards; }
+.scene-12.active .s12-row:nth-child(2) { animation: fadeLeft 0.5s ease-out 2.2s forwards; }
+.scene-12.active .s12-row:nth-child(3) { animation: fadeLeft 0.5s ease-out 2.6s forwards; }
+.scene-12.active .s12-row:nth-child(4) { animation: fadeLeft 0.5s ease-out 3.0s forwards; }
+.scene-12.active .s12-row:nth-child(5) { animation: fadeLeft 0.5s ease-out 3.4s forwards; }
+.scene-12.active .s12-row:nth-child(6) { animation: fadeLeft 0.5s ease-out 3.8s forwards; }
+.scene-12 .s12-footer {
+  margin-top: 30px;
+  font-family: 'Hiragino Sans', sans-serif;
+  font-size: clamp(13px, 1.15vw, 16px);
+  color: #fbbf24;
+  opacity: 0;
+  padding-top: 14px;
+  border-top: 1px solid rgba(251,191,36,0.2);
+  letter-spacing: 0.03em;
+}
+.scene-12.active .s12-footer {
+  animation: fadeIn 0.7s ease-out 4.4s forwards;
+}
+
+/* ============================================================
+   SCENE 13 · THE LOOP · 動きの循環
+   ============================================================ */
+.scene-13 {
+  background: #050508;
+  overflow: hidden;
+}
+.scene-13 .s13-bg-circle {
+  position: absolute;
+  width: 600px; height: 600px;
+  border: 1px dashed rgba(79,141,255,0.2);
+  border-radius: 50%;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+}
+.scene-13.active .s13-bg-circle {
+  animation: fadeIn 1s ease-out 0.3s forwards, rotateSlow 40s linear 0.3s infinite;
+}
+.scene-13 .s13-svg {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+}
+.scene-13 .s13-node {
+  opacity: 0;
+}
+.scene-13.active .s13-node1 { animation: pop 0.7s cubic-bezier(0.16,1,0.3,1) 0.8s forwards; }
+.scene-13.active .s13-node2 { animation: pop 0.7s cubic-bezier(0.16,1,0.3,1) 1.6s forwards; }
+.scene-13.active .s13-node3 { animation: pop 0.7s cubic-bezier(0.16,1,0.3,1) 2.4s forwards; }
+.scene-13 .s13-arrow {
+  fill: none;
+  stroke-width: 1.5;
+  stroke-dasharray: 400;
+  stroke-dashoffset: 400;
+}
+.scene-13.active .s13-arrow1 { animation: drawLine 1s ease-out 2.4s forwards; }
+.scene-13.active .s13-arrow2 { animation: drawLine 1s ease-out 3.1s forwards; }
+.scene-13.active .s13-arrow3 { animation: drawLine 1s ease-out 3.8s forwards; }
+.scene-13 .s13-title {
+  position: absolute;
+  top: 32px; left: 0; right: 0;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(10px, 0.85vw, 13px);
+  letter-spacing: 0.6em;
+  color: rgba(79,141,255,0.6);
+  opacity: 0;
+}
+.scene-13.active .s13-title {
+  animation: fadeIn 0.6s ease-out 0.5s forwards;
+}
+.scene-13 .s13-bottom {
+  position: absolute;
+  bottom: 40px; left: 0; right: 0;
+  text-align: center;
+  opacity: 0;
+}
+.scene-13.active .s13-bottom {
+  animation: fadeUp 1s ease-out 5.0s forwards;
+}
+.scene-13 .s13-bottom-text {
+  font-size: clamp(16px, 1.6vw, 22px);
+  color: #fff;
+  font-weight: 300;
+  letter-spacing: 0.03em;
+}
+.scene-13 .s13-bottom-text strong {
+  color: #4f8dff;
+}
+.scene-13 .s13-bottom-tag {
+  margin-top: 12px;
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(9px, 0.8vw, 11px);
+  letter-spacing: 0.5em;
+  color: rgba(79,141,255,0.5);
+}
+
+/* ============================================================
+   SCENE 14 · VISION · シネマティック締め
+   ============================================================ */
+.scene-14 {
+  background: radial-gradient(ellipse at center, #0a2a4f 0%, #050508 75%);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.scene-14::before {
+  content: '';
+  position: absolute;
+  width: 800px; height: 800px;
+  background: radial-gradient(circle, rgba(0,217,255,0.08) 0%, transparent 60%);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  border-radius: 50%;
+}
+.scene-14.active::before {
+  animation: fadeIn 2s ease-out 0.5s forwards;
+}
+.scene-14 .s14-final {
+  text-align: center;
+  opacity: 0;
+  position: relative;
+  z-index: 2;
+}
+.scene-14.active .s14-final {
+  animation: fadeIn 1.5s ease-out 1.0s forwards;
+}
+.scene-14 .s14-line1 {
+  font-size: clamp(40px, 4.6vw, 70px);
+  color: rgba(255,255,255,0.95);
+  font-weight: 200;
+  margin-bottom: 24px;
+  letter-spacing: 0.04em;
+  line-height: 1.3;
+}
+.scene-14 .s14-line1 strong {
+  color: #00d9ff;
+  font-weight: 400;
+}
+.scene-14 .s14-divider {
+  width: 80px;
+  height: 1px;
+  background: rgba(0,217,255,0.5);
+  margin: 30px auto;
+  opacity: 0;
+}
+.scene-14.active .s14-divider {
+  animation: fadeIn 1s ease-out 2.5s forwards;
+}
+.scene-14 .s14-line2 {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(13px, 1.2vw, 17px);
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 0.5em;
+  opacity: 0;
+}
+.scene-14.active .s14-line2 {
+  animation: fadeIn 1s ease-out 3.0s forwards;
+}
+.scene-14 .s14-lias {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(40px, 4.5vw, 64px);
+  font-weight: 200;
+  color: #fff;
+  letter-spacing: 0.3em;
+  margin-top: 30px;
+  opacity: 0;
+}
+.scene-14.active .s14-lias {
+  animation: fadeIn 1.5s ease-out 4.0s forwards;
+}
+
+/* ============================================================
+   CONTROLS · 再生ボタン群
+   ============================================================ */
+.controls {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 100;
+  opacity: 0.4;
+  transition: opacity 0.3s;
+}
+.controls:hover { opacity: 1; }
+.ctrl-btn {
+  background: rgba(255,255,255,0.06);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.15);
+  padding: 8px 18px;
+  border-radius: 4px;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.ctrl-btn:hover {
+  background: rgba(79,141,255,0.2);
+  border-color: #4f8dff;
+}
+.ctrl-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* タイムコード */
+.timecode {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  font-family: 'SF Mono', monospace;
+  font-size: 10px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.2em;
+  z-index: 100;
+}
+
+/* シーンインジケーター */
+.scene-dots {
+  position: absolute;
+  bottom: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 100;
+}
+.scene-dot {
+  width: 18px;
+  height: 2px;
+  background: rgba(255,255,255,0.15);
+  transition: all 0.4s;
+}
+.scene-dot.active {
+  background: #4f8dff;
+  width: 32px;
+}
+.scene-dot.passed {
+  background: rgba(79,141,255,0.4);
+}
+
+/* 音声ステータス */
+.audio-status {
+  position: absolute;
+  top: 20px;
+  left: 24px;
+  font-family: 'SF Mono', monospace;
+  font-size: 9px;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.15em;
+  z-index: 100;
+}
+</style>
+</head>
+<body>
+
+<div class="film">
+  <div class="stage-frame">
+
+    <!-- =============================================
+         SCENE 01 · PROLOGUE
+         ============================================= -->
+    <section class="scene scene-01 active" data-scene="01">
+      <div class="s1-text">A FILM BY AI</div>
+      <div class="s1-flash"></div>
+      <div class="s1-logo">
+        <div class="s1-logo-text">LIAS</div>
+        <div class="s1-logo-sub">BRAND FILM 2026</div>
+      </div>
+    </section>
+
+    <!-- =============================================
+         SCENE 02 · THE BUSINESS
+         ============================================= -->
+    <section class="scene scene-02" data-scene="02">
+      <div class="s2-hud">
+        <span class="s2-rec"><span class="s2-rec-dot"></span> REC · 01</span>
+        <span>CHAPTER 01 · WHAT WE DO</span>
+      </div>
+      <div class="s2-corner-tl"></div>
+      <div class="s2-corner-tr"></div>
+      <div class="s2-corner-bl"></div>
+      <div class="s2-corner-br"></div>
+      <div class="s2-content">
+        <div class="s2-fact">FACT 001</div>
+        <div class="s2-main">
+          海外から医薬品や医療機器を輸入し、<br>
+          日本のクリニックに届けています。
+        </div>
+        <div class="s2-strike">運ぶことが、ゴール。</div>
+        <div class="s2-conclusion">医療美容で、人を<span class="s2-happy">Happy</span>にする。</div>
+      </div>
+    </section>
+
+    <!-- =============================================
+         SCENE 03 · THE STRATEGY
+         ============================================= -->
+    <section class="scene scene-03" data-scene="03">
+      <div class="s3-num">03</div>
+      <div class="s3-content">
+        <div class="s3-eyebrow">THE STRATEGY</div>
+        <div class="s3-headline">どうやって、<br><strong>商圏</strong>を、つくるのか。</div>
+        <div class="s3-body">
+          やっていることは、シンプルに三つ。<br>
+          広げる、上げる、強くする。
+        </div>
+      </div>
+    </section>
+
+    <!-- =============================================
+         SCENE 04 · AXIS 01 宣言
+         ============================================= -->
+    <section class="scene scene-04" data-scene="04">
+      <div class="s4-bg-text">EXPAND</div>
+      <div class="s4-center">
+        <div class="s4-num">AXIS / 01</div>
+        <div class="s4-headline">商圏を、<br><span class="s4-headline-em">広げる</span>。</div>
+        <div class="s4-sub">THREE ROUTES · ONE GOAL</div>
+      </div>
+    </section>
+
+    <!-- =============================================
+         SCENE 05 · THE NET
+         ============================================= -->
+    <section class="scene scene-05" data-scene="05">
+      <div class="s5-header">
+        <div class="s5-title">JAPAN MEDICAL BEAUTY MARKET · <strong>SHARE BY ROUTE</strong></div>
+        <div class="s5-meta">UPDATED 2026</div>
+      </div>
+      <div class="s5-chart-area">
+        <div class="s5-grid">
+          <div class="s5-grid-line" style="top: 20%;"></div>
+          <div class="s5-grid-line" style="top: 50%;"></div>
+          <div class="s5-grid-line" style="top: 80%;"></div>
+        </div>
+        <div class="s5-bar-group">
+          <div class="s5-bar-wrap">
+            <div class="s5-bar s5-bar-1">
+              <div class="s5-bar-top-label">紹介で取る</div>
+            </div>
+          </div>
+          <div class="s5-bar-bottom">
+            <div class="s5-bar-name">PITTO</div>
+            <div class="s5-bar-desc">ROUTE / A</div>
+          </div>
+        </div>
+        <div class="s5-bar-group">
+          <div class="s5-bar-wrap">
+            <div class="s5-bar s5-bar-2">
+              <div class="s5-bar-top-label">検索で掬う</div>
+            </div>
+          </div>
+          <div class="s5-bar-bottom">
+            <div class="s5-bar-name">MEDIXOR</div>
+            <div class="s5-bar-desc">ROUTE / B</div>
+          </div>
+        </div>
+        <div class="s5-bar-group">
+          <div class="s5-bar-wrap">
+            <div class="s5-bar s5-bar-3">
+              <div class="s5-bar-top-label">スピードで取る</div>
+            </div>
+          </div>
+          <div class="s5-bar-bottom">
+            <div class="s5-bar-name">JJMEDITEC</div>
+            <div class="s5-bar-desc">ROUTE / C</div>
+          </div>
+        </div>
+      </div>
+      <div class="s5-caption">これが、LIASの商圏。</div>
+    </section>
+
+    <!-- =============================================
+         SCENE 06 · PITTO ①
+         ============================================= -->
+    <section class="scene scene-06" data-scene="06">
+      <div class="s6-mock">
+        <div class="s6-mock-logo">PITTO</div>
+        <div class="s6-mock-url">pitto.i15.bcart.jp</div>
+        <div class="s6-mock-banner">
+          <div class="s6-mock-date">2026 / 06.28</div>
+          <div class="s6-mock-academy">VANDS &amp; LIAS<br>Medical Academy</div>
+          <div class="s6-mock-tag">FIRST SESSION 2026</div>
+        </div>
+      </div>
+      <div class="s6-text">
+        <div class="s6-route">ROUTE / A</div>
+        <div class="s6-name">PITTO</div>
+        <div class="s6-tagline">紹介制のクローズドサイト。<br><strong>信頼の連鎖</strong>で、広げる。</div>
+        <div class="s6-points">
+          <div class="s6-point">
+            <span class="s6-point-num">01 · PRICE</span>
+            圧倒的な安さが、紹介を呼ぶ。
+          </div>
+          <div class="s6-point">
+            <span class="s6-point-num">02 · REWARD</span>
+            紹介してくれた人にも、対価を返す。
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============================================
+         SCENE 07 · PITTO 起源
+         ============================================= -->
+    <section class="scene scene-07" data-scene="07">
+      <div class="s7-paper">
+        <div class="s7-letter">A NOTE FROM THE BEGINNING</div>
+        <div class="s7-quote">
+          AIで自動化しないと、<br>
+          <em>この先は、回らない。</em>
+        </div>
+        <div class="s7-signature">── そう教えてくれた、最初のサイト。<strong>PITTO</strong></div>
+      </div>
+    </section>
+
+    <!-- =============================================
+         SCENE 08 · MEDIXOR
+         ============================================= -->
+    <section class="scene scene-08" data-scene="08">
+      <div class="s8-left">
+        <div class="s8-logo">Medixor</div>
+        <div class="s8-tag">MEDICAL BEAUTY PROVIDER</div>
+        <div class="s8-stats">
+          <div class="s8-stat">
+            <span class="s8-stat-label">スキンブースター</span>
+            <span class="s8-stat-num">42<small>種類</small></span>
+          </div>
+          <div class="s8-stat">
+            <span class="s8-stat-label">ヒアルロン酸</span>
+            <span class="s8-stat-num">24<small>種類</small></span>
+          </div>
+          <div class="s8-stat">
+            <span class="s8-stat-label">ボツリヌス</span>
+            <span class="s8-stat-num">12<small>種類</small></span>
+          </div>
+          <div class="s8-stat">
+            <span class="s8-stat-label">登録スピード(対 PITTO比)</span>
+            <span class="s8-stat-num">2x<small>+</small></span>
+          </div>
+        </div>
+      </div>
+      <div class="s8-right">
+        <div class="s8-route">ROUTE / B</div>
+        <div class="s8-headline">検索の<strong>入口</strong>に立つ。</div>
+        <div class="s8-body">
+          公開サイトで、これまで出会えなかった先生方とつながり始めた。<br>
+          SEOもコンテンツも、AIに任せる形で運用しています。
+        </div>
+      </div>
+    </section>
+
+    <!-- =============================================
+         SCENE 09 · JJMEDITEC
+         ============================================= -->
+    <section class="scene scene-09" data-scene="09">
+      <div class="s9-deco">
+        <div class="s9-c1"></div>
+        <div class="s9-c2"></div>
+        <div class="s9-c3"></div>
+      </div>
+      <div class="s9-content">
+        <div class="s9-tag">ROUTE / C · JJMEDITEC</div>
+        <div class="s9-badge"><span class="s9-badge-icon">KR</span> KOREA × JAPAN MEDICAL</div>
+        <div class="s9-headline">MINTED<br>ELEGANCE</div>
+        <div class="s9-headline-2">JAPAN.</div>
+        <div class="s9-tagline">注文の翌日には、商品が発送できる。<br>在庫を持たずに、規模を取る。</div>
+        <div class="s9-features">
+          <div class="s9-feature">
+            <div class="s9-feature-key">+1 day</div>
+            <div class="s9-feature-label">納品スピード</div>
+          </div>
+          <div class="s9-feature">
+            <div class="s9-feature-key">¥0</div>
+            <div class="s9-feature-label">通関負担</div>
+          </div>
+          <div class="s9-feature">
+            <div class="s9-feature-key">AI</div>
+            <div class="s9-feature-label">フロー自動化</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============================================
+         SCENE 10 · AXIS 01 まとめ
+         ============================================= -->
+    <section class="scene scene-10" data-scene="10">
+      <div class="s10-stack">
+        <div class="s10-tag">SUMMARY · AXIS 01</div>
+        <div class="s10-line">
+          <span class="s10-word">紹介</span>
+          <span class="s10-sep"></span>
+          <span class="s10-word">検索</span>
+          <span class="s10-sep"></span>
+          <span class="s10-word">スピード</span>
+        </div>
+        <div class="s10-conclusion">三つの違う戦術で、LIASは商圏を広げている。</div>
+        <div class="s10-but">— でも、広げるだけでは足りない。</div>
+      </div>
+    </section>
+
+    <!-- =============================================
+         SCENE 11 · AXIS 02 ACADEMY
+         ============================================= -->
+    <section class="scene scene-11" data-scene="11">
+      <div class="s11-image-wrap">
+        <img class="s11-image" src="images/academy.png" alt="VANDS & LIAS Medical Academy">
+        <div class="s11-image-overlay"></div>
+      </div>
+      <div class="s11-content">
+        <div class="s11-emblem-line">
+          <span class="s11-emblem-dot"></span>
+          <span class="s11-emblem-text">VANDS &amp; LIAS</span>
+        </div>
+        <div class="s11-headline"><strong>価値を、上げる。</strong><br>物販を、超えていく。</div>
+        <div class="s11-body">
+          韓国で<strong>40店舗以上を展開</strong>する最大手のベンスクリニックと組み、商材だけでなく、技術とノウハウまで、医療従事者に届ける教育機関。
+        </div>
+        <div class="s11-meta">
+          <span class="s11-meta-line"></span>
+          <span class="s11-meta-text">FIRST SESSION · 2026.06.28</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============================================
+         SCENE 12 · AXIS 03 SYSTEM
+         ============================================= -->
+    <section class="scene scene-12" data-scene="12">
+      <div class="s12-header">
+        <span>// AXIS / 03 · SYSTEM</span>
+        <span class="s12-blink">RUNTIME · 24/7</span>
+      </div>
+      <div class="s12-axis">回す力を、強くする。</div>
+      <div class="s12-sub">// 役割をはっきり分けて、商圏に時間を注ぐ</div>
+      <div class="s12-list">
+        <div class="s12-row"><span class="s12-tag-ai">AI</span><span>仕入原価の管理 — 為替リアルタイム</span></div>
+        <div class="s12-row"><span class="s12-tag-ai">AI</span><span>受注 → 納品ステータス追跡</span></div>
+        <div class="s12-row"><span class="s12-tag-ai">AI</span><span>入金確認・請求書&amp;領収書発行</span></div>
+        <div class="s12-row"><span class="s12-tag-ai">AI</span><span>取引先情報の一元管理</span></div>
+        <div class="s12-row"><span class="s12-tag-human">HUMAN</span><span>判断・交渉・関係構築</span></div>
+        <div class="s12-row"><span class="s12-tag-human">HUMAN</span><span>商圏に時間を注ぐ。攻めの仕事に集中</span></div>
+      </div>
+      <div class="s12-footer">// AIが作業を引き受ける分、人は攻めに集中できる。</div>
+    </section>
+
+    <!-- =============================================
+         SCENE 13 · THE LOOP
+         ============================================= -->
+    <section class="scene scene-13" data-scene="13">
+      <div class="s13-title">THE LOOP · 止まらない循環</div>
+      <div class="s13-bg-circle"></div>
+      <svg class="s13-svg" viewBox="0 0 1400 700" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <marker id="arr13" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M0 0L10 5L0 10" fill="#4f8dff"/>
+          </marker>
+        </defs>
+        <!-- 中央上:商圏(青) -->
+        <g class="s13-node s13-node1">
+          <rect x="600" y="120" width="200" height="80" rx="6" fill="rgba(79,141,255,0.12)" stroke="#4f8dff" stroke-width="1.5"/>
+          <text x="700" y="148" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#4f8dff" letter-spacing="4">AXIS / 01</text>
+          <text x="700" y="178" text-anchor="middle" font-size="18" fill="#fff" font-weight="300">商圏を広げる</text>
+        </g>
+        <!-- 右下:価値(赤) -->
+        <g class="s13-node s13-node2">
+          <rect x="970" y="460" width="200" height="80" rx="6" fill="rgba(239,68,68,0.12)" stroke="#ef4444" stroke-width="1.5"/>
+          <text x="1070" y="488" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#ef4444" letter-spacing="4">AXIS / 02</text>
+          <text x="1070" y="518" text-anchor="middle" font-size="18" fill="#fff" font-weight="300">価値を上げる</text>
+        </g>
+        <!-- 左下:回す力(黄) -->
+        <g class="s13-node s13-node3">
+          <rect x="230" y="460" width="200" height="80" rx="6" fill="rgba(251,191,36,0.12)" stroke="#fbbf24" stroke-width="1.5"/>
+          <text x="330" y="488" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#fbbf24" letter-spacing="4">AXIS / 03</text>
+          <text x="330" y="518" text-anchor="middle" font-size="18" fill="#fff" font-weight="300">回す力を強くする</text>
+        </g>
+        <!-- 矢印1: 商圏 → 価値 -->
+        <path class="s13-arrow s13-arrow1" d="M 800 200 Q 950 320 970 470" stroke="#4f8dff" marker-end="url(#arr13)"/>
+        <!-- 矢印2: 価値 → 回す力 -->
+        <path class="s13-arrow s13-arrow2" d="M 970 510 Q 700 600 430 510" stroke="#4f8dff" marker-end="url(#arr13)"/>
+        <!-- 矢印3: 回す力 → 商圏 -->
+        <path class="s13-arrow s13-arrow3" d="M 430 470 Q 450 320 600 200" stroke="#4f8dff" marker-end="url(#arr13)"/>
+      </svg>
+      <div class="s13-bottom">
+        <div class="s13-bottom-text">伸びた事業が、また<strong>回す力</strong>を強くする。</div>
+        <div class="s13-bottom-tag">A SYSTEM THAT NEVER STOPS</div>
+      </div>
+    </section>
+
+    <!-- =============================================
+         SCENE 14 · VISION
+         ============================================= -->
+    <section class="scene scene-14" data-scene="14">
+      <div class="s14-final">
+        <div class="s14-line1">商圏を、つくる。<br>そのために、<strong>AIを使う</strong>。</div>
+        <div class="s14-divider"></div>
+        <div class="s14-line2">THIS IS HOW LIAS GROWS</div>
+        <div class="s14-lias">LIAS</div>
+      </div>
+    </section>
+
+    <!-- =============================================
+         HUD · タイムコード・コントロール
+         ============================================= -->
+    <div class="audio-status">AUDIO · <span id="audioLoadCount">0</span>/14</div>
+    <div class="timecode" id="timecode">00:00</div>
+
+    <div class="scene-dots" id="sceneDots"></div>
+
+    <div class="controls">
+      <button class="ctrl-btn" id="playBtn">▶ PLAY</button>
+      <button class="ctrl-btn" id="pauseBtn" disabled>❚❚ PAUSE</button>
+      <button class="ctrl-btn" id="prevBtn">PREV</button>
+      <button class="ctrl-btn" id="nextBtn">NEXT</button>
+      <button class="ctrl-btn" id="resetBtn">RESET</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   AUDIO MANAGEMENT
+   ============================================================ */
+const scenes = document.querySelectorAll('.scene');
+const sceneCount = scenes.length;
+
+// 音声ファイルパス(ユーザーが lias_audio/ フォルダに配置)
+const audioFiles = Array.from({ length: 14 }, (_, i) =>
+  `lias_audio/scene${String(i + 1).padStart(2, '0')}.mp3`
+);
+
+const audioElements = audioFiles.map(src => {
+  const audio = new Audio(src);
+  audio.preload = 'auto';
+  return audio;
+});
+
+const audioDurations = new Array(audioFiles.length).fill(0);
+const fallbackDurations = [
+  6000,   // 01 PROLOGUE
+  9000,   // 02 THE BUSINESS
+  6000,   // 03 THE STRATEGY
+  6500,   // 04 AXIS 01
+  10000,  // 05 THE NET
+  10000,  // 06 PITTO ①
+  9000,   // 07 PITTO 起源
+  13000,  // 08 MEDIXOR
+  11000,  // 09 JJMEDITEC
+  6000,   // 10 AXIS 01 まとめ
+  11000,  // 11 AXIS 02 ACADEMY
+  9000,   // 12 AXIS 03 SYSTEM
+  10000,  // 13 THE LOOP
+  7000    // 14 VISION
+];
+
+let loadedAudioCount = 0;
+audioElements.forEach((audio, i) => {
+  audio.addEventListener('loadedmetadata', () => {
+    audioDurations[i] = audio.duration * 1000 + 800;
+    loadedAudioCount++;
+    const el = document.getElementById('audioLoadCount');
+    if (el) el.textContent = loadedAudioCount;
+  });
+  audio.addEventListener('error', () => {
+    audioDurations[i] = fallbackDurations[i];
+  });
+});
+
+function getSceneDuration(index) {
+  return audioDurations[index] || fallbackDurations[index];
+}
+
+let currentAudio = null;
+function playSceneAudio(index) {
+  if (currentAudio) {
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+  }
+  currentAudio = audioElements[index];
+  if (currentAudio) {
+    currentAudio.currentTime = 0;
+    currentAudio.play().catch(err => console.warn('audio err:', err));
+  }
+}
+function pauseSceneAudio() {
+  if (currentAudio && !currentAudio.paused) currentAudio.pause();
+}
+function resumeSceneAudio() {
+  if (currentAudio && currentAudio.paused) currentAudio.play().catch(err => console.warn(err));
+}
+function stopAllAudio() {
+  audioElements.forEach(a => { a.pause(); a.currentTime = 0; });
+  currentAudio = null;
+}
+
+/* ============================================================
+   SCENE MANAGEMENT
+   ============================================================ */
+let current = 0;
+let isPlaying = false;
+let isPaused = false;
+let timeouts = [];
+let sceneStartTime = 0;
+let pausedRemaining = 0;
+let tcStart = 0;
+let tcOffset = 0;
+let tcInterval = null;
+
+const dotsContainer = document.getElementById('sceneDots');
+for (let i = 0; i < sceneCount; i++) {
+  const dot = document.createElement('div');
+  dot.className = 'scene-dot';
+  if (i === 0) dot.classList.add('active');
+  dotsContainer.appendChild(dot);
+}
+const dots = document.querySelectorAll('.scene-dot');
+
+function showScene(index) {
+  scenes.forEach((s, i) => s.classList.toggle('active', i === index));
+  dots.forEach((d, i) => {
+    d.classList.toggle('active', i === index);
+    d.classList.toggle('passed', i < index);
+  });
+  current = index;
+
+  // アニメーション再起動
+  const sceneEl = scenes[index];
+  const animEls = sceneEl.querySelectorAll('[class*="s' + String(index+1).padStart(2,'0').slice(-2) + '-"], .s'+(index+1)+'-');
+  animEls.forEach(el => {
+    el.style.animation = 'none';
+    void el.offsetWidth;
+    el.style.animation = '';
+  });
+
+  if (isPlaying && !isPaused) {
+    playSceneAudio(index);
+  }
+}
+
+function updateTimecode() {
+  if (!isPlaying || isPaused) return;
+  const elapsed = performance.now() - tcStart;
+  const sec = Math.floor(elapsed / 1000);
+  const min = Math.floor(sec / 60);
+  const ss = String(sec % 60).padStart(2, '0');
+  document.getElementById('timecode').textContent = `${String(min).padStart(2,'0')}:${ss}`;
+}
+
+function resetInternals() {
+  timeouts.forEach(t => clearTimeout(t));
+  timeouts = [];
+}
+
+function scheduleScene(index, delay) {
+  const t = setTimeout(() => {
+    showScene(index);
+    sceneStartTime = performance.now();
+    const dur = getSceneDuration(index);
+    if (index < sceneCount - 1) {
+      const next = setTimeout(() => scheduleScene(index + 1, 0), dur);
+      timeouts.push(next);
+    } else {
+      const end = setTimeout(() => {
+        isPlaying = false;
+        document.getElementById('playBtn').disabled = false;
+        document.getElementById('pauseBtn').disabled = true;
+        clearInterval(tcInterval);
+      }, dur);
+      timeouts.push(end);
+    }
+  }, delay);
+  timeouts.push(t);
+}
+
+function playSequence() {
+  if (isPlaying && !isPaused) return;
+
+  if (isPaused) {
+    isPaused = false;
+    document.getElementById('playBtn').disabled = true;
+    document.getElementById('pauseBtn').disabled = false;
+    document.getElementById('playBtn').textContent = '▶ PLAY';
+    tcStart = performance.now() - tcOffset;
+    tcInterval = setInterval(updateTimecode, 50);
+    sceneStartTime = performance.now();
+    resumeSceneAudio();
+    if (current < sceneCount - 1) {
+      const t = setTimeout(() => scheduleScene(current + 1, 0), pausedRemaining);
+      timeouts.push(t);
+    } else {
+      const t = setTimeout(() => {
+        isPlaying = false;
+        document.getElementById('playBtn').disabled = false;
+        document.getElementById('pauseBtn').disabled = true;
+        clearInterval(tcInterval);
+      }, pausedRemaining);
+      timeouts.push(t);
+    }
+    return;
+  }
+
+  isPlaying = true;
+  document.getElementById('playBtn').disabled = true;
+  document.getElementById('pauseBtn').disabled = false;
+  resetInternals();
+  tcStart = performance.now();
+  tcOffset = 0;
+  tcInterval = setInterval(updateTimecode, 50);
+  scheduleScene(0, 0);
+}
+
+function pauseSequence() {
+  if (!isPlaying || isPaused) return;
+  isPaused = true;
+  timeouts.forEach(t => clearTimeout(t));
+  timeouts = [];
+  const elapsed = performance.now() - sceneStartTime;
+  pausedRemaining = Math.max(0, getSceneDuration(current) - elapsed);
+  tcOffset = performance.now() - tcStart;
+  clearInterval(tcInterval);
+  pauseSceneAudio();
+  document.getElementById('playBtn').disabled = false;
+  document.getElementById('playBtn').textContent = '▶ RESUME';
+  document.getElementById('pauseBtn').disabled = true;
+}
+
+function resetSequence() {
+  resetInternals();
+  isPlaying = false;
+  isPaused = false;
+  current = 0;
+  pausedRemaining = 0;
+  tcOffset = 0;
+  stopAllAudio();
+  document.getElementById('playBtn').disabled = false;
+  document.getElementById('playBtn').textContent = '▶ PLAY';
+  document.getElementById('pauseBtn').disabled = true;
+  clearInterval(tcInterval);
+  document.getElementById('timecode').textContent = '00:00';
+  showScene(0);
+}
+
+function manualNav(direction) {
+  pauseSequence();
+  let next = current + direction;
+  if (next < 0) next = 0;
+  if (next >= sceneCount) next = sceneCount - 1;
+  showScene(next);
+}
+
+document.getElementById('playBtn').addEventListener('click', playSequence);
+document.getElementById('pauseBtn').addEventListener('click', pauseSequence);
+document.getElementById('resetBtn').addEventListener('click', resetSequence);
+document.getElementById('prevBtn').addEventListener('click', () => manualNav(-1));
+document.getElementById('nextBtn').addEventListener('click', () => manualNav(1));
+
+document.addEventListener('keydown', (e) => {
+  if (e.code === 'Space') { e.preventDefault(); isPlaying && !isPaused ? pauseSequence() : playSequence(); }
+  if (e.code === 'ArrowRight') manualNav(1);
+  if (e.code === 'ArrowLeft') manualNav(-1);
+  if (e.code === 'KeyR') resetSequence();
+});
+
+showScene(0);
+</script>
+</body>
+</html>
