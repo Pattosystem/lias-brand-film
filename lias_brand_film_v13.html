@@ -2137,17 +2137,23 @@ const scenes = document.querySelectorAll('.scene');
 const sceneCount = scenes.length;
 
 // 音声ファイルパス(ユーザーが lias_audio/ フォルダに配置)
-const audioFiles = Array.from({ length: 14 }, (_, i) =>
-  `lias_audio/scene${String(i + 1).padStart(2, '0')}.mp3`
-);
+// scene01.mp3 が正しいが、間違って scene02.mp3.mp3 などになっている場合のフォールバック
+async function findAudioPath(num) {
+  const candidates = [
+    `lias_audio/scene${num}.mp3`,
+    `lias_audio/scene${num}.mp3.mp3`
+  ];
+  for (const url of candidates) {
+    try {
+      const res = await fetch(url, { method: 'HEAD' });
+      if (res.ok) return url;
+    } catch (e) { /* ignore */ }
+  }
+  return candidates[0]; // どっちもダメなら一番目のパスを返す
+}
 
-const audioElements = audioFiles.map(src => {
-  const audio = new Audio(src);
-  audio.preload = 'auto';
-  return audio;
-});
-
-const audioDurations = new Array(audioFiles.length).fill(0);
+const audioElements = new Array(14).fill(null);
+const audioDurations = new Array(14).fill(0);
 const fallbackDurations = [
   6000,   // 01 PROLOGUE
   9000,   // 02 THE BUSINESS
@@ -2166,17 +2172,21 @@ const fallbackDurations = [
 ];
 
 let loadedAudioCount = 0;
-audioElements.forEach((audio, i) => {
-  audio.addEventListener('loadedmetadata', () => {
-    audioDurations[i] = audio.duration * 1000 + 800;
-    loadedAudioCount++;
-    const el = document.getElementById('audioLoadCount');
-    if (el) el.textContent = loadedAudioCount;
-  });
-  audio.addEventListener('error', () => {
-    audioDurations[i] = fallbackDurations[i];
-  });
-});
+(async () => {
+  for (let i = 0; i < 14; i++) {
+    const num = String(i + 1).padStart(2, '0');
+    const url = await findAudioPath(num);
+    const audio = new Audio(url);
+    audio.preload = 'auto';
+    audio.addEventListener('loadedmetadata', () => {
+      audioDurations[i] = audio.duration * 1000 + 800;
+      loadedAudioCount++;
+      const el = document.getElementById('audioLoadCount');
+      if (el) el.textContent = loadedAudioCount;
+    });
+    audioElements[i] = audio;
+  }
+})();
 
 function getSceneDuration(index) {
   return audioDurations[index] || fallbackDurations[index];
